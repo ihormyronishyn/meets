@@ -17,7 +17,25 @@
 		60BB2BF1300F9E1F0079F60B /* Version.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Version.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		60672A113018C357003124AF /* Exceptions for "Modules" folder in "Meets" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Services,
+			);
+			target = 60BB2BD8300F9E1D0079F60B /* Meets */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		60672A0F3018C323003124AF /* Modules */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				60672A113018C357003124AF /* Exceptions for "Modules" folder in "Meets" target */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
 		60BB2BDB300F9E1D0079F60B /* Meets */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Meets;
@@ -43,6 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				60BB2BDB300F9E1D0079F60B /* Meets */,
+				60672A0F3018C323003124AF /* Modules */,
 				60BB2BF2300F9E1F0079F60B /* Configs */,
 				60BB2BDA300F9E1D0079F60B /* Products */,
 			);
@@ -82,6 +101,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				60672A0F3018C323003124AF /* Modules */,
 				60BB2BDB300F9E1D0079F60B /* Meets */,
 			);
 			name = Meets;
