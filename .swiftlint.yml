@@ -1,8 +1,11 @@
 excluded:
-  - DerivedData
-  - .build
-  - SourcePackages
-  - vendor
+  # A bare name is resolved against the directory of this file, so it would
+  # cover the one at the root and miss the build directory that every local
+  # package carries of its own. The glob covers both.
+  - "**/DerivedData"
+  - "**/.build"
+  - "**/SourcePackages"
+  - "**/vendor"
   - "**/Generated"
   - "**/*.generated.swift"
 
