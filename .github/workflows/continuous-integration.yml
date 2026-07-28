@@ -1,0 +1,151 @@
+name: Continuous Integration
+
+# Runs on every push to the main line or a release branch, and on every pull
+# request that targets one of them, so feature work heading for main and the
+# fixes heading for a release train are gated the same way. The steps mirror
+# the local commit gate, the code is formatted, linted, and built the same way
+# the machine of a contributor does it.
+on:
+  push:
+    branches: [main, "release/**"]
+  pull_request:
+    branches: [main, "release/**"]
+
+# A newer push to the same branch supersedes an in flight run, so only the
+# latest state is ever spending a runner.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Verify
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      # The pinned tools are compiled from source on first use, which is slow.
+      # A cache keyed on their description reuses that work across runs and is
+      # rebuilt only when a pinned version changes.
+      - name: Cache Tools
+        uses: actions/cache@v6
+        with:
+          path: ~/.mint
+          key: mint-${{ runner.os }}-${{ hashFiles('Mintfile') }}
+
+      # The dependency clones and checkouts of the package manager, keyed on the
+      # resolved versions, so cloning and resolving dependencies is done once
+      # and reused until a version changes. The partial key lets an older cache
+      # seed a run whose versions have moved. Both keys stay empty and harmless
+      # until the first dependency is added.
+      - name: Cache Packages
+        uses: actions/cache@v6
+        with:
+          path: |
+            ~/Library/Caches/org.swift.swiftpm
+            ~/Library/org.swift.swiftpm
+          key: spm-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            spm-${{ runner.os }}-
+
+      # The version manager installs the pinned versions and links them onto
+      # the path. The setup script is not used here, its job is
+      # local convenience and it steps aside when the pipeline variable is set,
+      # which the runner provides on its own.
+      - name: Install Tools
+        run: |
+          brew install mint
+          mint bootstrap --link
+
+      # On a release branch the version is bumped by hand, so it is checked
+      # here. Such a branch names the series it releases, and the version it
+      # carries has to belong to that series, otherwise a build would go out
+      # reporting a version nobody released. Everywhere else there is nothing
+      # to compare against and the step does nothing.
+      - name: Version
+        run: |
+          branch="${GITHUB_BASE_REF:-$GITHUB_REF_NAME}"
+          case "$branch" in
+            release/*) ;;
+            *) echo "::notice::Not a release branch, nothing to check."; exit 0 ;;
+          esac
+
+          series="${branch#release/}"
+          version=$(awk -F'=' '/^MARKETING_VERSION/ {gsub(/[ \t]|\/\/.*/, "", $2); print $2}' Configs/Version.xcconfig)
+
+          if [ "${version%.*}" != "$series" ]; then
+            echo "::error::Configs/Version.xcconfig says $version, which is not part of the $series series this branch releases. Run Scripts/set-version.sh $series.0 or correct the branch."
+            exit 1
+          fi
+          echo "Version $version matches the $series series."
+
+      # The formatter in report only mode. It rewrites nothing and fails when
+      # the tree is not already formatted, so unformatted code cannot merge.
+      - name: Format
+        run: mint run swiftformat . --lint
+
+      # The linter in strict mode, where a warning is an error, matching the
+      # commit gate.
+      - name: Lint
+        run: mint run swiftlint lint --strict
+
+      # A simulator build against a generic destination, which needs no code
+      # signing and no particular simulator to be installed on the runner.
+      - name: Build
+        run: |
+          xcodebuild build \
+            -project Meets.xcodeproj \
+            -scheme Meets \
+            -destination 'generic/platform=iOS Simulator' \
+            -quiet
+
+      # The whole test suite on one concrete simulator. The modules are expected
+      # to use the interface frameworks of the platform, so they are built for a
+      # simulator like the application rather than tested on the host. The
+      # application runs when its scheme carries a test target, a module runs
+      # when it carries tests of its own, and the step stays green until the
+      # first of either exists.
+      - name: Test
+        run: |
+          # Decide what there is to test before booting a simulator.
+          app_has_tests=false
+          if grep -q TestableReference Meets.xcodeproj/xcshareddata/xcschemes/Meets.xcscheme; then
+            app_has_tests=true
+          fi
+
+          # Packages sit at any depth in the module folder, since the layers
+          # above them only group, so the search recurses and skips the build
+          # folder where dependency checkouts carry their own manifests.
+          module_dirs=()
+          while IFS= read -r manifest; do
+            dir=$(dirname "$manifest")
+            if [ -d "$dir/Tests" ] && [ -n "$(ls -A "$dir/Tests")" ]; then
+              module_dirs+=("$dir")
+            fi
+          done < <(find Modules -name Package.swift -not -path '*/.build/*' 2>/dev/null | sort)
+
+          if [ "$app_has_tests" = false ] && [ ${#module_dirs[@]} -eq 0 ]; then
+            echo "::notice::No app or module tests found yet, skipping the test run."
+            exit 0
+          fi
+
+          # One simulator serves both the application and the modules, so the
+          # interface frameworks resolve, which a host run cannot provide.
+          device=$(xcrun simctl list devices available -j \
+            | jq -r '[.devices[][] | select(.name | test("iPhone"))][0].udid // empty')
+          if [ -z "$device" ]; then
+            echo "::error::No iPhone simulator is available on the runner."
+            exit 1
+          fi
+
+          if [ "$app_has_tests" = true ]; then
+            echo "Testing app"
+            xcodebuild test -project Meets.xcodeproj -scheme Meets -destination "id=$device" -quiet
+          fi
+
+          for dir in "${module_dirs[@]}"; do
+            module=$(basename "$dir")
+            echo "Testing module $module"
+            ( cd "$dir" && xcodebuild test -scheme "$module" -destination "id=$device" -quiet )
+          done

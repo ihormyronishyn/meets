@@ -1,0 +1,12 @@
+# Keeps the pinned workflow actions current. The language tools are pinned in
+# the mint file and bumped deliberately, so actions are the only ecosystem
+# watched here. The commit prefix keeps the pull request title conventional,
+# the title gate applies to these pull requests like any other.
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "ci"

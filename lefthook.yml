@@ -1,0 +1,60 @@
+# Shared version control automation using pinned tool versions.
+
+# A small companion is loaded before the automation runs so that graphical
+# tools can find everything they need.
+rc: .lefthookrc
+
+# Keep the output plain so it stays readable everywhere, including graphical
+# tools, which garble coloring and cut off long output.
+colors: false
+output: []
+
+# The two steps run one after another in the stated order, and a failing
+# step stops the chain, so the linter always reads code the formatter has
+# already finished rewriting.
+pre-commit:
+  piped: true
+  commands:
+    swiftformat:
+      priority: 1
+      glob: "*.swift"
+      # Format the staged code in place and stage the resulting fixes.
+      run: mint run swiftformat {staged_files} --quiet
+      stage_fixed: true
+    swiftlint:
+      priority: 2
+      glob: "*.swift"
+      run: mint run swiftlint lint --quiet --strict {staged_files}
+
+# Keeps commit messages in the conventional style. A predictable cleanup
+# fixes what it can, and a message it cannot bring into shape is rejected
+# with an example.
+commit-msg:
+  commands:
+    style:
+      run: Scripts/format-commit-message.sh {1}
+
+# Self reporting. Whenever an action that updates the working copy changes any
+# of the files that describe the toolchain, the fingerprint check notices and
+# says what to run. It installs nothing on its own, because that wait belongs
+# to whoever asked for it. When nothing changed these return in milliseconds
+# and print nothing. The report is never allowed to fail the action that
+# triggered it, since the working copy has already moved by then.
+
+post-merge:
+  commands:
+    check-tooling:
+      run: Scripts/bootstrap.sh --check || true
+
+post-checkout:
+  commands:
+    check-tooling:
+      run: Scripts/bootstrap.sh --check || true
+
+post-rewrite:
+  commands:
+    check-tooling:
+      run: Scripts/bootstrap.sh --check || true
+
+# The automation runner itself is pinned as well. The setup makes it findable
+# on the machine, and its version is fixed alongside the other tools.

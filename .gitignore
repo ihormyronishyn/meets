@@ -1,0 +1,38 @@
+# Operating system noise.
+.DS_Store
+
+# Build tool working files.
+xcuserdata/
+DerivedData/
+*.xcresult
+*.moved-aside
+*.xccheckout
+*.xcscmblueprint
+
+# Package manager working files.
+.build/
+.swiftpm/
+SourcePackages/
+
+# Release automation reports when in use.
+fastlane/report.xml
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# Secrets and signing material that must never be committed.
+.env
+.env.*
+!.env.example
+*.p8
+*.p12
+*.mobileprovision
+Config.xcconfig
+
+# Packaged builds, archives, and debug symbol bundles that belong in the
+# release pipeline rather than the repository.
+*.ipa
+*.xcarchive
+*.dSYM.zip
+
+# Personal machine local settings for the assistant tooling.
+.claude/settings.local.json

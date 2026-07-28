@@ -1,0 +1,91 @@
+excluded:
+  - DerivedData
+  - .build
+  - SourcePackages
+  - vendor
+  - "**/Generated"
+  - "**/*.generated.swift"
+
+disabled_rules:
+  - todo
+  - trailing_comma
+
+  # Layout and redundancy the formatter already repairs on its own. It runs
+  # ahead of the linter at the commit gate and after every assisted edit, so
+  # these can only ever fire in the build step, where they would stop a build
+  # over something that fixes itself. Ownership stays with one tool, the
+  # formatter shapes the code and the linter judges it.
+  - colon
+  - control_statement
+  - duplicate_imports
+  - implicit_getter
+  - implicit_optional_initialization
+  - no_space_in_method_call
+  - opening_brace
+  - redundant_discardable_let
+  - redundant_string_enum_value
+  - redundant_void_return
+  - return_arrow_whitespace
+  - statement_position
+  - switch_case_alignment
+  - trailing_whitespace
+  - unused_closure_parameter
+  - vertical_whitespace
+
+opt_in_rules:
+  - contains_over_first_not_nil
+  - discouraged_object_literal
+  - empty_count
+  - empty_string
+  - fatal_error_message
+  - first_where
+  - force_unwrapping
+  - implicitly_unwrapped_optional
+  - last_where
+  - legacy_multiple
+  - overridden_super_call
+  - prefer_self_type_over_type_of_self
+  - redundant_nil_coalescing
+  - sorted_first_last
+  - toggle_bool
+  - unowned_variable_capture
+  - weak_delegate
+
+line_length:
+  warning: 120
+  error: 160
+  ignores_comments: true
+  ignores_urls: true
+
+type_body_length:
+  warning: 300
+  error: 500
+
+function_body_length:
+  warning: 60
+  error: 100
+
+file_length:
+  warning: 500
+  error: 800
+
+identifier_name:
+  min_length: 2
+  excluded: [id, x, y, vm, db]
+
+force_unwrapping:
+  severity: error
+  ignored_literal_argument_functions: []
+
+force_cast:
+  severity: error
+
+force_try:
+  severity: error
+
+nesting:
+  type_level: 2
+
+cyclomatic_complexity:
+  warning: 12
+  error: 20

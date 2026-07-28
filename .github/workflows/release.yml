@@ -1,0 +1,64 @@
+name: Release
+
+# Publishes a release for a version tag. The trunk releases are already
+# published by the release pull request, so this covers the tags that are cut
+# by hand on a release branch during stabilization, and it stays quiet when a
+# release for the tag already exists.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      # A tag names a version, and the build produced from that commit reports
+      # whatever the version file says. When the two disagree the tag is wrong,
+      # or the bump was forgotten, and publishing it would be worse than
+      # failing here.
+      - name: Version
+        run: |
+          tag="$GITHUB_REF_NAME"
+          version=$(awk -F'=' '/^MARKETING_VERSION/ {gsub(/[ \t]|\/\/.*/, "", $2); print $2}' Configs/Version.xcconfig)
+
+          if [ "${tag#v}" != "$version" ]; then
+            echo "::error::The tag is $tag but Configs/Version.xcconfig says $version. Run Scripts/set-version.sh ${tag#v}, commit, and move the tag."
+            exit 1
+          fi
+          echo "Tag $tag matches the version in the project."
+
+      - name: Publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="$GITHUB_REF_NAME"
+
+          # The trunk automation publishes its own releases, so a tag that
+          # already has one is left alone rather than duplicated.
+          if gh release view "$tag" >/dev/null 2>&1; then
+            echo "::notice::$tag already has a release, nothing to do."
+            exit 0
+          fi
+
+          # The notes are the section the changelog already carries for this
+          # version. Without one, the generated notes stand in.
+          version="${tag#v}"
+          notes=$(awk -v v="$version" '
+            index($0, "## [" v "]") == 1 { found = 1; next }
+            found && /^## \[/ { exit }
+            found { print }
+          ' CHANGELOG.md 2>/dev/null || true)
+
+          if [ -n "$notes" ]; then
+            printf '%s\n' "$notes" > "$RUNNER_TEMP/notes.md"
+            gh release create "$tag" --title "$tag" --notes-file "$RUNNER_TEMP/notes.md"
+          else
+            gh release create "$tag" --title "$tag" --generate-notes
+          fi

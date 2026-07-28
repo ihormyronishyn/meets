@@ -1,0 +1,12 @@
+// The version of the application, in the two parts the platform keeps apart,
+// each named here by the build setting that carries it into the built app.
+
+// The version of the distribution, the one people see. The release automation
+// owns it on the trunk, and the version script sets it on a release branch, so
+// it is not edited by hand, and not set in the project file, where an explicit
+// setting would win over this one.
+MARKETING_VERSION = 1.0.0 // x-release-please-version
+
+// The build number, which tells one submitted build from another. It matters
+// only when uploading, so it is left to whoever performs that upload.
+CURRENT_PROJECT_VERSION = 1

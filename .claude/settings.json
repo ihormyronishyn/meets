@@ -1,0 +1,103 @@
+{
+  "includeCoAuthoredBy": false,
+  "permissions": {
+    "allow": [
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep",
+
+      "mcp__xcodebuildmcp",
+
+      "Bash(pwd)",
+      "Bash(ls:*)",
+
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git blame:*)",
+      "Bash(git commit:*)",
+
+      "Bash(swift build:*)",
+      "Bash(swift test:*)",
+      "Bash(swift package describe)",
+      "Bash(swift package dump-package)",
+
+      "Bash(mint run swiftformat:*)",
+      "Bash(mint run swiftlint:*)",
+
+      "Bash(xcrun simctl:*)",
+
+      "Bash(Scripts/bootstrap.sh)",
+      "Bash(Scripts/bootstrap.sh --check)",
+      "Bash(Scripts/set-version.sh:*)",
+      "Bash(.claude/hooks/post-edit.sh)"
+    ],
+    "deny": [
+      "Bash(rm:*)",
+
+      "Bash(xcrun simctl erase:*)",
+
+      "Bash(git push:*)",
+      "Bash(git rebase:*)",
+      "Bash(git reset:*)",
+      "Bash(git merge:*)",
+      "Bash(git checkout:*)",
+      "Bash(git switch:*)",
+      "Bash(git clean:*)",
+      "Bash(git restore:*)",
+
+      "Bash(git commit --no-verify:*)",
+      "Bash(git commit -n:*)",
+
+      "Read(.env)",
+      "Read(.env.*)",
+      "Read(**/*.p8)",
+      "Read(**/*.p12)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)",
+      "Read(**/*.cer)",
+      "Read(**/*.mobileprovision)",
+      "Read(**/GoogleService-Info.plist)",
+      "Read(**/Secrets.plist)",
+      "Read(**/Config.xcconfig)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/Scripts/bootstrap.sh --check || true",
+            "timeout": 15
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/post-edit.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "extraKnownMarketplaces": {
+    "claude-swift-helper": {
+      "source": {
+        "source": "github",
+        "repo": "ihormyronishyn/claude-swift-helper"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "claude-swift-helper@claude-swift-helper": true
+  }
+}

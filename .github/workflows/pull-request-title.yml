@@ -1,0 +1,39 @@
+name: Pull Request Title
+
+# A squash merge takes the pull request title as the commit that lands on the
+# trunk, and the release automation reads its version and changelog from those
+# commits. The local commit hook only ever sees the commits that squashing
+# discards, so the title is the one message nothing else validates. The check
+# mirrors the hook, one shape enforced in two places.
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+    branches: [main, "release/**"]
+
+permissions: {}
+
+jobs:
+  title:
+    name: Conventional
+    runs-on: ubuntu-latest
+
+    steps:
+      # The title reaches the script through the environment rather than
+      # through template interpolation, so a title containing quotes or
+      # command substitution stays plain text.
+      - name: Check
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          pattern='^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\([a-z0-9._/-]+\))?!?: .+[^.[:space:]]$'
+
+          if ! printf '%s' "$TITLE" | grep -qE "$pattern"; then
+            echo "::error::The title becomes the squash commit on the trunk and must be conventional, a lowercase type word, an optional scope, then a short description with no trailing period like type(scope): description"
+            exit 1
+          fi
+
+          if [ "${#TITLE}" -gt 72 ]; then
+            echo "::warning::The title is ${#TITLE} characters, aim for 72 or fewer, it becomes the commit summary."
+          fi
+
+          echo "The title is conventional."

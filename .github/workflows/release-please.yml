@@ -1,0 +1,55 @@
+name: Release Please
+
+# Watches the trunk and keeps a release pull request open, which collects the
+# next version and the changelog entry from the conventional commits that have
+# landed. Merging that pull request is what performs a release, so the timing
+# stays a deliberate decision rather than a side effect of merging work.
+on:
+  push:
+    branches: [main]
+
+# The action opens and updates a pull request, and pushes the tag and the
+# release once that pull request is merged.
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    name: Prepare
+    runs-on: ubuntu-latest
+
+    steps:
+      # The token matters. Anything opened with the default workflow token
+      # cannot start another workflow, so the release pull request would never
+      # run the gate, and with a required check it could never be merged. The
+      # cost of that is not a broken run, it is a pull request that waits
+      # forever for a status nobody sends, which reads as a stuck pipeline
+      # rather than as a missing secret. So the token is checked first and the
+      # run stops here, loudly, while the reason is still obvious.
+      - name: Token
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::error::The RELEASE_PLEASE_TOKEN secret is missing, so no release pull request was opened. Create a fine grained token limited to this repository, with contents write and pull requests write, then add it with: gh secret set RELEASE_PLEASE_TOKEN. The setup section of CONTRIBUTING.md has the full steps."
+            exit 1
+          fi
+
+          # A present secret is not a working one. An expired, revoked, or
+          # wrongly scoped token fails later inside the action, with a message
+          # about the interface rather than about the secret, so it is worth
+          # one call to say plainly which of the two is wrong.
+          if ! gh api "repos/$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "::error::The RELEASE_PLEASE_TOKEN secret is set but cannot read this repository, so it has expired, was revoked, or was scoped to something else. Issue a new fine grained token for this repository, with contents write and pull requests write, then replace the secret with: gh secret set RELEASE_PLEASE_TOKEN."
+            exit 1
+          fi
+
+      # Reads the conventional commits since the last release, then bumps the
+      # version in the manifest and in the version file, writes the changelog,
+      # and on merge tags the commit and publishes the release.
+      - uses: googleapis/release-please-action@v5
+        with:
+          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json

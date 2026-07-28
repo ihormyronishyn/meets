@@ -1,0 +1,4 @@
+# Loaded before shared automation.
+# Ensures required tools can be found when hooks run outside the terminal.
+
+export PATH="$HOME/.mint/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"

@@ -1,0 +1,31 @@
+--swift-version 6.3
+
+# Layout.
+--indent 4
+--max-width 120
+--trim-whitespace always
+
+# Trailing commas follow the language version declared above, which allows
+# them everywhere, so collections and argument lists receive them alike.
+--trailing-commas always
+
+# Wrapping.
+--wrap-arguments before-first
+--wrap-parameters before-first
+--wrap-collections before-first
+--wrap-conditions preserve
+
+# Cleanups.
+--self remove
+--strip-unused-args closure-only
+--import-grouping testable-bottom
+--semicolons never
+
+# Rules that tend to cause noise or disagree with the linter.
+--disable wrapMultilineStatementBraces
+
+# A type opens with a blank line before its first section header, which is the
+# house style, so the rule that closes that gap is turned off.
+--disable blankLinesAtStartOfScope
+
+--exclude DerivedData,.build,SourcePackages,vendor,**/Generated

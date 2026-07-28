@@ -1,0 +1,4 @@
+# Line endings are normalized at the version control layer, so the rule
+# holds even for tools that never read the shared editor settings.
+
+* text=auto eol=lf
