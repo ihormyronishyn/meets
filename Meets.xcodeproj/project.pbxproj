@@ -70,6 +70,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		60672A2F3019E3A6003124AF /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				60672A2E3019E3A6003124AF /* Meets.xctestplan */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
 		60BB2BD0300F9E1D0079F60B = {
 			isa = PBXGroup;
 			children = (
@@ -96,14 +104,6 @@
 				60BB2BF1300F9E1F0079F60B /* Version.xcconfig */,
 			);
 			path = Configs;
-			sourceTree = "<group>";
-		};
-		60672A2F3019E3A6003124AF /* Tests */ = {
-			isa = PBXGroup;
-			children = (
-				60672A2E3019E3A6003124AF /* Meets.xctestplan */,
-			);
-			path = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
