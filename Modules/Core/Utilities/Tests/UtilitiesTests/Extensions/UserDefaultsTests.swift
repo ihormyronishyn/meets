@@ -7,10 +7,12 @@ import Foundation
 import Testing
 @testable import Utilities
 
+@Suite
 enum UserDefaultsTests {
 
     // MARK: - Write
 
+    @Suite
     final class Write {
 
         // MARK: - Properties
@@ -36,7 +38,7 @@ enum UserDefaultsTests {
         // MARK: - Tests
 
         @Test
-        func `stores A string`() {
+        func storesAString() {
             // Act.
             store.write("Text", forKey: "key")
 
@@ -45,7 +47,7 @@ enum UserDefaultsTests {
         }
 
         @Test
-        func `stores A number`() {
+        func storesANumber() {
             // Act.
             store.write(42, forKey: "key")
 
@@ -54,7 +56,7 @@ enum UserDefaultsTests {
         }
 
         @Test
-        func `stores zero as A value`() {
+        func storesZeroAsAValue() {
             // Act.
             store.write(0, forKey: "key")
 
@@ -66,7 +68,7 @@ enum UserDefaultsTests {
         }
 
         @Test
-        func `replaces A stored value`() {
+        func replacesAStoredValue() {
             // Arrange.
             store.write("Text", forKey: "key")
 
@@ -78,7 +80,7 @@ enum UserDefaultsTests {
         }
 
         @Test
-        func `removes the key on nil`() {
+        func removesTheKeyOnNil() {
             // Arrange.
             store.write("Text", forKey: "key")
 
@@ -90,7 +92,7 @@ enum UserDefaultsTests {
         }
 
         @Test
-        func `leaves nothing behind on nil`() {
+        func leavesNothingBehindOnNil() {
             // Arrange.
             store.write("Text", forKey: "key")
 
@@ -104,7 +106,7 @@ enum UserDefaultsTests {
         }
 
         @Test
-        func `nil on an unknown key is harmless`() {
+        func nilOnAnUnknownKeyIsHarmless() {
             // Act.
             store.write(nil, forKey: "key")
 

@@ -28,4 +28,11 @@
 # house style, so the rule that closes that gap is turned off.
 --disable blankLinesAtStartOfScope
 
+# Tests are named in camel case and every suite says so out loud. The first
+# rule rewrites a test name into a raw identifier with spaces, and the second
+# strips an attribute it considers implied, so both are turned off and the
+# code reads the way it was written.
+--disable swiftTestingTestCaseNames
+--disable redundantSwiftTestingSuite
+
 --exclude DerivedData,.build,SourcePackages,vendor,**/Generated

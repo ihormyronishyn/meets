@@ -33,7 +33,7 @@ final class UserAuthenticationServiceTests {
     // MARK: - Tests
 
     @Test
-    func `empty store is not authenticated`() {
+    func emptyStoreIsNotAuthenticated() {
         // Arrange.
         let service = UserAuthenticationService(store: store)
 
@@ -44,7 +44,7 @@ final class UserAuthenticationServiceTests {
     }
 
     @Test
-    func `zero is valid room id`() {
+    func zeroIsValidRoomId() {
         // Arrange.
         let service = UserAuthenticationService(store: store)
 
@@ -57,7 +57,7 @@ final class UserAuthenticationServiceTests {
     }
 
     @Test
-    func `username without room not authenticated`() {
+    func usernameWithoutRoomNotAuthenticated() {
         // Arrange.
         store.set(User.john.username, forKey: "username")
         let service = UserAuthenticationService(store: store)
@@ -69,7 +69,7 @@ final class UserAuthenticationServiceTests {
     }
 
     @Test
-    func `room without username not authenticated`() {
+    func roomWithoutUsernameNotAuthenticated() {
         // Arrange.
         store.set(User.john.roomId, forKey: "roomId")
         let service = UserAuthenticationService(store: store)
@@ -81,7 +81,7 @@ final class UserAuthenticationServiceTests {
     }
 
     @Test
-    func `login holds credentials`() {
+    func loginHoldsCredentials() {
         // Arrange.
         let service = UserAuthenticationService(store: store)
 
@@ -95,7 +95,7 @@ final class UserAuthenticationServiceTests {
     }
 
     @Test
-    func `repeated login replaces credentials`() {
+    func repeatedLoginReplacesCredentials() {
         // Arrange.
         let service = UserAuthenticationService(store: store)
         service.login(username: User.john.username, roomId: User.john.roomId)
@@ -110,7 +110,7 @@ final class UserAuthenticationServiceTests {
     }
 
     @Test
-    func `logout drops credentials`() {
+    func logoutDropsCredentials() {
         // Arrange.
         let service = UserAuthenticationService(store: store)
         service.login(username: User.john.username, roomId: User.john.roomId)
@@ -125,7 +125,7 @@ final class UserAuthenticationServiceTests {
     }
 
     @Test
-    func `logout leaves no key in the store`() {
+    func logoutLeavesNoKeyInTheStore() {
         // Arrange.
         let service = UserAuthenticationService(store: store)
         service.login(username: User.john.username, roomId: User.john.roomId)
@@ -139,7 +139,7 @@ final class UserAuthenticationServiceTests {
     }
 
     @Test
-    func `login carries across instances`() {
+    func loginCarriesAcrossInstances() {
         // Arrange.
         let service = UserAuthenticationService(store: store)
 
@@ -154,7 +154,7 @@ final class UserAuthenticationServiceTests {
     }
 
     @Test
-    func `logout carries across instances`() {
+    func logoutCarriesAcrossInstances() {
         // Arrange.
         let service = UserAuthenticationService(store: store)
         service.login(username: User.john.username, roomId: User.john.roomId)

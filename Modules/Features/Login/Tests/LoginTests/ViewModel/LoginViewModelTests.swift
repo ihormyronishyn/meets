@@ -31,13 +31,13 @@ final class LoginViewModelTests {
     // MARK: - Tests
 
     @Test
-    func `empty fields are not allowed`() {
+    func emptyFieldsAreNotAllowed() {
         // Assert.
         #expect(viewModel.isLoginAllowed == false)
     }
 
     @Test
-    func `blank username is not allowed`() {
+    func blankUsernameIsNotAllowed() {
         // Act.
         viewModel.usernameText = "   "
         viewModel.roomIdText = "1"
@@ -47,7 +47,7 @@ final class LoginViewModelTests {
     }
 
     @Test
-    func `room that is not A number is refused`() {
+    func roomThatIsNotANumberIsRefused() {
         // Act.
         viewModel.usernameText = "John"
         viewModel.roomIdText = "Seven"
@@ -57,7 +57,7 @@ final class LoginViewModelTests {
     }
 
     @Test
-    func `negative room is refused`() {
+    func negativeRoomIsRefused() {
         // Act.
         viewModel.usernameText = "John"
         viewModel.roomIdText = "-5"
@@ -67,7 +67,7 @@ final class LoginViewModelTests {
     }
 
     @Test
-    func `zero room is allowed`() {
+    func zeroRoomIsAllowed() {
         // Act.
         viewModel.usernameText = "John"
         viewModel.roomIdText = "0"
@@ -77,7 +77,7 @@ final class LoginViewModelTests {
     }
 
     @Test
-    func `filled fields are allowed`() {
+    func filledFieldsAreAllowed() {
         // Act.
         viewModel.usernameText = "John"
         viewModel.roomIdText = "1"
@@ -87,7 +87,7 @@ final class LoginViewModelTests {
     }
 
     @Test
-    func `login hands the credentials over`() {
+    func loginHandsTheCredentialsOver() {
         // Arrange.
         viewModel.usernameText = "Alex"
         viewModel.roomIdText = "2"
@@ -102,7 +102,7 @@ final class LoginViewModelTests {
     }
 
     @Test
-    func `login trims the username`() {
+    func loginTrimsTheUsername() {
         // Arrange.
         viewModel.usernameText = "  John  "
         viewModel.roomIdText = "1"
@@ -115,7 +115,7 @@ final class LoginViewModelTests {
     }
 
     @Test
-    func `login tells the router`() {
+    func loginTellsTheRouter() {
         // Arrange.
         viewModel.usernameText = "John"
         viewModel.roomIdText = "1"
@@ -128,7 +128,7 @@ final class LoginViewModelTests {
     }
 
     @Test
-    func `login does nothing when not allowed`() {
+    func loginDoesNothingWhenNotAllowed() {
         // Arrange.
         viewModel.usernameText = "John"
         viewModel.roomIdText = "Seven"
