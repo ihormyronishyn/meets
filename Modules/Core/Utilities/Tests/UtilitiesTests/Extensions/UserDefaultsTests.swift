@@ -7,10 +7,12 @@ import Foundation
 import Testing
 @testable import Utilities
 
+@Suite
 enum UserDefaultsTests {
 
     // MARK: - Write
 
+    @Suite
     final class Write {
 
         // MARK: - Properties
@@ -36,29 +38,29 @@ enum UserDefaultsTests {
         // MARK: - Tests
 
         @Test
-        func `stores A string`() {
-            // Act
+        func storesAString() {
+            // Act.
             store.write("Text", forKey: "key")
 
-            // Assert
+            // Assert.
             #expect(store.string(forKey: "key") == "Text")
         }
 
         @Test
-        func `stores A number`() {
-            // Act
+        func storesANumber() {
+            // Act.
             store.write(42, forKey: "key")
 
-            // Assert
+            // Assert.
             #expect(store.object(forKey: "key") as? Int == 42)
         }
 
         @Test
-        func `stores zero as A value`() {
-            // Act
+        func storesZeroAsAValue() {
+            // Act.
             store.write(0, forKey: "key")
 
-            // Assert
+            // Assert.
             // The key has to exist, since a reader tells a stored zero from a
             // missing entry only by asking for the object.
             #expect(store.object(forKey: "key") != nil)
@@ -66,49 +68,49 @@ enum UserDefaultsTests {
         }
 
         @Test
-        func `replaces A stored value`() {
-            // Arrange
+        func replacesAStoredValue() {
+            // Arrange.
             store.write("Text", forKey: "key")
 
-            // Act
+            // Act.
             store.write("Other text", forKey: "key")
 
-            // Assert
+            // Assert.
             #expect(store.string(forKey: "key") == "Other text")
         }
 
         @Test
-        func `removes the key on nil`() {
-            // Arrange
+        func removesTheKeyOnNil() {
+            // Arrange.
             store.write("Text", forKey: "key")
 
-            // Act
+            // Act.
             store.write(nil, forKey: "key")
 
-            // Assert
+            // Assert.
             #expect(store.object(forKey: "key") == nil)
         }
 
         @Test
-        func `leaves nothing behind on nil`() {
-            // Arrange
+        func leavesNothingBehindOnNil() {
+            // Arrange.
             store.write("Text", forKey: "key")
 
-            // Act
+            // Act.
             store.write(nil, forKey: "key")
 
-            // Assert
+            // Assert.
             // The entry is gone rather than emptied, so the whole domain holds
             // no trace of the key.
             #expect(store.dictionaryRepresentation()["key"] == nil)
         }
 
         @Test
-        func `nil on an unknown key is harmless`() {
-            // Act
+        func nilOnAnUnknownKeyIsHarmless() {
+            // Act.
             store.write(nil, forKey: "key")
 
-            // Assert
+            // Assert.
             #expect(store.object(forKey: "key") == nil)
         }
     }

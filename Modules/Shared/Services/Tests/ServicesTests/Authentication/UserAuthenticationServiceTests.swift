@@ -33,137 +33,137 @@ final class UserAuthenticationServiceTests {
     // MARK: - Tests
 
     @Test
-    func `empty store is not authenticated`() {
-        // Arrange
+    func emptyStoreIsNotAuthenticated() {
+        // Arrange.
         let service = UserAuthenticationService(store: store)
 
-        // Assert
+        // Assert.
         #expect(service.isAuthenticated == false)
         #expect(service.username == nil)
         #expect(service.roomId == nil)
     }
 
     @Test
-    func `zero is valid room id`() {
-        // Arrange
+    func zeroIsValidRoomId() {
+        // Arrange.
         let service = UserAuthenticationService(store: store)
 
-        // Act
+        // Act.
         service.login(username: User.john.username, roomId: .zero)
 
-        // Assert
+        // Assert.
         #expect(service.isAuthenticated == true)
         #expect(service.roomId == .zero)
     }
 
     @Test
-    func `username without room not authenticated`() {
-        // Arrange
+    func usernameWithoutRoomNotAuthenticated() {
+        // Arrange.
         store.set(User.john.username, forKey: "username")
         let service = UserAuthenticationService(store: store)
 
-        // Assert
+        // Assert.
         #expect(service.isAuthenticated == false)
         #expect(service.username == User.john.username)
         #expect(service.roomId == nil)
     }
 
     @Test
-    func `room without username not authenticated`() {
-        // Arrange
+    func roomWithoutUsernameNotAuthenticated() {
+        // Arrange.
         store.set(User.john.roomId, forKey: "roomId")
         let service = UserAuthenticationService(store: store)
 
-        // Assert
+        // Assert.
         #expect(service.isAuthenticated == false)
         #expect(service.username == nil)
         #expect(service.roomId == User.john.roomId)
     }
 
     @Test
-    func `login holds credentials`() {
-        // Arrange
+    func loginHoldsCredentials() {
+        // Arrange.
         let service = UserAuthenticationService(store: store)
 
-        // Act
+        // Act.
         service.login(username: User.alex.username, roomId: User.alex.roomId)
 
-        // Assert
+        // Assert.
         #expect(service.isAuthenticated == true)
         #expect(service.username == User.alex.username)
         #expect(service.roomId == User.alex.roomId)
     }
 
     @Test
-    func `repeated login replaces credentials`() {
-        // Arrange
+    func repeatedLoginReplacesCredentials() {
+        // Arrange.
         let service = UserAuthenticationService(store: store)
         service.login(username: User.john.username, roomId: User.john.roomId)
 
-        // Act
+        // Act.
         service.login(username: User.alex.username, roomId: User.alex.roomId)
 
-        // Assert
+        // Assert.
         #expect(service.isAuthenticated == true)
         #expect(service.username == User.alex.username)
         #expect(service.roomId == User.alex.roomId)
     }
 
     @Test
-    func `logout drops credentials`() {
-        // Arrange
+    func logoutDropsCredentials() {
+        // Arrange.
         let service = UserAuthenticationService(store: store)
         service.login(username: User.john.username, roomId: User.john.roomId)
 
-        // Act
+        // Act.
         service.logout()
 
-        // Assert
+        // Assert.
         #expect(service.isAuthenticated == false)
         #expect(service.username == nil)
         #expect(service.roomId == nil)
     }
 
     @Test
-    func `logout leaves no key in the store`() {
-        // Arrange
+    func logoutLeavesNoKeyInTheStore() {
+        // Arrange.
         let service = UserAuthenticationService(store: store)
         service.login(username: User.john.username, roomId: User.john.roomId)
 
-        // Act
+        // Act.
         service.logout()
 
-        // Assert
+        // Assert.
         #expect(store.object(forKey: "username") == nil)
         #expect(store.object(forKey: "roomId") == nil)
     }
 
     @Test
-    func `login carries across instances`() {
-        // Arrange
+    func loginCarriesAcrossInstances() {
+        // Arrange.
         let service = UserAuthenticationService(store: store)
 
-        // Act
+        // Act.
         service.login(username: User.john.username, roomId: User.john.roomId)
         let restored = UserAuthenticationService(store: store)
 
-        // Assert
+        // Assert.
         #expect(restored.isAuthenticated == true)
         #expect(restored.username == User.john.username)
         #expect(restored.roomId == User.john.roomId)
     }
 
     @Test
-    func `logout carries across instances`() {
-        // Arrange
+    func logoutCarriesAcrossInstances() {
+        // Arrange.
         let service = UserAuthenticationService(store: store)
         service.login(username: User.john.username, roomId: User.john.roomId)
 
-        // Act
+        // Act.
         service.logout()
         let restored = UserAuthenticationService(store: store)
 
-        // Assert
+        // Assert.
         #expect(restored.isAuthenticated == false)
         #expect(restored.username == nil)
         #expect(restored.roomId == nil)
