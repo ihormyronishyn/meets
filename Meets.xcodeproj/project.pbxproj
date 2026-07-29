@@ -24,6 +24,7 @@
 		60672A113018C357003124AF /* Exceptions for "Modules" folder in "Meets" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Core/Utilities,
 				Features/Login,
 				Shared/Services,
 			);

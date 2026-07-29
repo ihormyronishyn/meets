@@ -4,32 +4,26 @@
 import PackageDescription
 
 let package = Package(
-    name: "Services",
+    name: "Utilities",
     platforms: [
         .iOS(.v26),
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "Services",
-            targets: ["Services"],
+            name: "Utilities",
+            targets: ["Utilities"],
         ),
-    ],
-    dependencies: [
-        .package(path: "../../Core/Utilities"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "Services",
-            dependencies: [
-                "Utilities",
-            ],
+            name: "Utilities",
         ),
         .testTarget(
-            name: "ServicesTests",
-            dependencies: ["Services"],
+            name: "UtilitiesTests",
+            dependencies: ["Utilities"],
         ),
     ],
     swiftLanguageModes: [.v6],

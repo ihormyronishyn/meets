@@ -31,6 +31,13 @@
         "identifier" : "LoginTests",
         "name" : "LoginTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/Core\/Utilities",
+        "identifier" : "UtilitiesTests",
+        "name" : "UtilitiesTests"
+      }
     }
   ],
   "version" : 1
