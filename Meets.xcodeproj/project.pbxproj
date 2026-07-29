@@ -7,9 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		606729F83018BAE4003124AF /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 606729F73018BAE4003124AF /* SocketIO */; };
 		606729FB3018BAF4003124AF /* Stinsen in Frameworks */ = {isa = PBXBuildFile; productRef = 606729FA3018BAF4003124AF /* Stinsen */; };
-		606729FE3018BB01003124AF /* WebRTC in Frameworks */ = {isa = PBXBuildFile; productRef = 606729FD3018BB01003124AF /* WebRTC */; };
 		60672A2B30190D21003124AF /* Services in Frameworks */ = {isa = PBXBuildFile; productRef = 60672A2A30190D21003124AF /* Services */; };
 		60672A2D30190D24003124AF /* Login in Frameworks */ = {isa = PBXBuildFile; productRef = 60672A2C30190D24003124AF /* Login */; };
 /* End PBXBuildFile section */
@@ -24,6 +22,7 @@
 		60672A113018C357003124AF /* Exceptions for "Modules" folder in "Meets" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Core/Entities,
 				Core/Utilities,
 				Features/Login,
 				Shared/Services,
@@ -54,8 +53,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				60672A2B30190D21003124AF /* Services in Frameworks */,
-				606729F83018BAE4003124AF /* SocketIO in Frameworks */,
-				606729FE3018BB01003124AF /* WebRTC in Frameworks */,
 				60672A2D30190D24003124AF /* Login in Frameworks */,
 				606729FB3018BAF4003124AF /* Stinsen in Frameworks */,
 			);
@@ -130,9 +127,7 @@
 			);
 			name = Meets;
 			packageProductDependencies = (
-				606729F73018BAE4003124AF /* SocketIO */,
 				606729FA3018BAF4003124AF /* Stinsen */,
-				606729FD3018BB01003124AF /* WebRTC */,
 				60672A2A30190D21003124AF /* Services */,
 				60672A2C30190D24003124AF /* Login */,
 			);
@@ -165,9 +160,7 @@
 			mainGroup = 60BB2BD0300F9E1D0079F60B;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				606729F63018BAE4003124AF /* XCRemoteSwiftPackageReference "socket" */,
 				606729F93018BAF4003124AF /* XCRemoteSwiftPackageReference "stinsen" */,
-				606729FC3018BB01003124AF /* XCRemoteSwiftPackageReference "WebRTC" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 60BB2BDA300F9E1D0079F60B /* Products */;
@@ -475,14 +468,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		606729F63018BAE4003124AF /* XCRemoteSwiftPackageReference "socket" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/socketio/socket.io-client-swift";
-			requirement = {
-				kind = exactVersion;
-				version = 16.1.1;
-			};
-		};
 		606729F93018BAF4003124AF /* XCRemoteSwiftPackageReference "stinsen" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rundfunk47/stinsen";
@@ -491,31 +476,13 @@
 				version = 2.0.15;
 			};
 		};
-		606729FC3018BB01003124AF /* XCRemoteSwiftPackageReference "WebRTC" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/stasel/WebRTC";
-			requirement = {
-				kind = exactVersion;
-				version = 150.0.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		606729F73018BAE4003124AF /* SocketIO */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 606729F63018BAE4003124AF /* XCRemoteSwiftPackageReference "socket" */;
-			productName = SocketIO;
-		};
 		606729FA3018BAF4003124AF /* Stinsen */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 606729F93018BAF4003124AF /* XCRemoteSwiftPackageReference "stinsen" */;
 			productName = Stinsen;
-		};
-		606729FD3018BB01003124AF /* WebRTC */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 606729FC3018BB01003124AF /* XCRemoteSwiftPackageReference "WebRTC" */;
-			productName = WebRTC;
 		};
 		60672A2A30190D21003124AF /* Services */ = {
 			isa = XCSwiftPackageProductDependency;
