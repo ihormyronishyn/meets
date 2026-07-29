@@ -32,70 +32,70 @@ final class LoginViewModelTests {
 
     @Test
     func `empty fields are not allowed`() {
-        // Assert
+        // Assert.
         #expect(viewModel.isLoginAllowed == false)
     }
 
     @Test
     func `blank username is not allowed`() {
-        // Act
+        // Act.
         viewModel.usernameText = "   "
         viewModel.roomIdText = "1"
 
-        // Assert
+        // Assert.
         #expect(viewModel.isLoginAllowed == false)
     }
 
     @Test
     func `room that is not A number is refused`() {
-        // Act
+        // Act.
         viewModel.usernameText = "John"
         viewModel.roomIdText = "Seven"
 
-        // Assert
+        // Assert.
         #expect(viewModel.isLoginAllowed == false)
     }
 
     @Test
     func `negative room is refused`() {
-        // Act
+        // Act.
         viewModel.usernameText = "John"
         viewModel.roomIdText = "-5"
 
-        // Assert
+        // Assert.
         #expect(viewModel.isLoginAllowed == false)
     }
 
     @Test
     func `zero room is allowed`() {
-        // Act
+        // Act.
         viewModel.usernameText = "John"
         viewModel.roomIdText = "0"
 
-        // Assert
+        // Assert.
         #expect(viewModel.isLoginAllowed == true)
     }
 
     @Test
     func `filled fields are allowed`() {
-        // Act
+        // Act.
         viewModel.usernameText = "John"
         viewModel.roomIdText = "1"
 
-        // Assert
+        // Assert.
         #expect(viewModel.isLoginAllowed == true)
     }
 
     @Test
     func `login hands the credentials over`() {
-        // Arrange
+        // Arrange.
         viewModel.usernameText = "Alex"
         viewModel.roomIdText = "2"
 
-        // Act
+        // Act.
         viewModel.login()
 
-        // Assert
+        // Assert.
         #expect(userAuthenticationService.loginCallCount == 1)
         #expect(userAuthenticationService.username == "Alex")
         #expect(userAuthenticationService.roomId == 2)
@@ -103,40 +103,40 @@ final class LoginViewModelTests {
 
     @Test
     func `login trims the username`() {
-        // Arrange
+        // Arrange.
         viewModel.usernameText = "  John  "
         viewModel.roomIdText = "1"
 
-        // Act
+        // Act.
         viewModel.login()
 
-        // Assert
+        // Assert.
         #expect(userAuthenticationService.username == "John")
     }
 
     @Test
     func `login tells the router`() {
-        // Arrange
+        // Arrange.
         viewModel.usernameText = "John"
         viewModel.roomIdText = "1"
 
-        // Act
+        // Act.
         viewModel.login()
 
-        // Assert
+        // Assert.
         #expect(router.didLoginCallCount == 1)
     }
 
     @Test
     func `login does nothing when not allowed`() {
-        // Arrange
+        // Arrange.
         viewModel.usernameText = "John"
         viewModel.roomIdText = "Seven"
 
-        // Act
+        // Act.
         viewModel.login()
 
-        // Assert
+        // Assert.
         #expect(userAuthenticationService.loginCallCount == .zero)
         #expect(router.didLoginCallCount == .zero)
     }
