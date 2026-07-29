@@ -17,6 +17,8 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../Core/Utilities"),
+        .package(url: "https://github.com/socketio/socket.io-client-swift", exact: "16.1.1"),
+        .package(url: "https://github.com/stasel/WebRTC", exact: "150.0.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -25,6 +27,8 @@ let package = Package(
             name: "Services",
             dependencies: [
                 "Utilities",
+                .product(name: "SocketIO", package: "socket.io-client-swift"),
+                .product(name: "WebRTC", package: "WebRTC"),
             ],
         ),
         .testTarget(
