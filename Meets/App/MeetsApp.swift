@@ -3,6 +3,7 @@
 //  Meets
 //
 
+import Stinsen
 import SwiftUI
 
 @main
@@ -12,7 +13,9 @@ struct MeetsApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationViewCoordinator(
+                AppCoordinator(),
+            ).view()
         } //: WindowGroup
     }
 }
