@@ -16,6 +16,7 @@ let package = Package(
         ),
     ],
     dependencies: [
+        .package(path: "../../Core/Entities"),
         .package(path: "../../Core/Utilities"),
         .package(url: "https://github.com/socketio/socket.io-client-swift", exact: "16.1.1"),
         .package(url: "https://github.com/stasel/WebRTC", exact: "150.0.0"),
@@ -26,6 +27,7 @@ let package = Package(
         .target(
             name: "Services",
             dependencies: [
+                "Entities",
                 "Utilities",
                 .product(name: "SocketIO", package: "socket.io-client-swift"),
                 .product(name: "WebRTC", package: "WebRTC"),
@@ -33,7 +35,10 @@ let package = Package(
         ),
         .testTarget(
             name: "ServicesTests",
-            dependencies: ["Services"],
+            dependencies: [
+                "Services",
+                "Entities",
+            ],
         ),
     ],
     swiftLanguageModes: [.v6],
