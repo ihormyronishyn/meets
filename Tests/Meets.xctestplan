@@ -1,0 +1,37 @@
+{
+  "configurations" : [
+    {
+      "id" : "590C3006-2960-464F-8FB7-B34435D83D71",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : true,
+    "performanceAntipatternCheckerEnabled" : true,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:Meets.xcodeproj",
+      "identifier" : "60BB2BD8300F9E1D0079F60B",
+      "name" : "Meets"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/Shared\/Services",
+        "identifier" : "ServicesTests",
+        "name" : "ServicesTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/Features\/Login",
+        "identifier" : "LoginTests",
+        "name" : "LoginTests"
+      }
+    }
+  ],
+  "version" : 1
+}

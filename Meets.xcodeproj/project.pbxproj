@@ -10,9 +10,12 @@
 		606729F83018BAE4003124AF /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 606729F73018BAE4003124AF /* SocketIO */; };
 		606729FB3018BAF4003124AF /* Stinsen in Frameworks */ = {isa = PBXBuildFile; productRef = 606729FA3018BAF4003124AF /* Stinsen */; };
 		606729FE3018BB01003124AF /* WebRTC in Frameworks */ = {isa = PBXBuildFile; productRef = 606729FD3018BB01003124AF /* WebRTC */; };
+		60672A2B30190D21003124AF /* Services in Frameworks */ = {isa = PBXBuildFile; productRef = 60672A2A30190D21003124AF /* Services */; };
+		60672A2D30190D24003124AF /* Login in Frameworks */ = {isa = PBXBuildFile; productRef = 60672A2C30190D24003124AF /* Login */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		60672A2E3019E3A6003124AF /* Meets.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Meets.xctestplan; sourceTree = "<group>"; };
 		60BB2BD9300F9E1D0079F60B /* Meets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Meets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60BB2BF1300F9E1F0079F60B /* Version.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Version.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -21,7 +24,8 @@
 		60672A113018C357003124AF /* Exceptions for "Modules" folder in "Meets" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Services,
+				Features/Login,
+				Shared/Services,
 			);
 			target = 60BB2BD8300F9E1D0079F60B /* Meets */;
 		};
@@ -48,8 +52,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60672A2B30190D21003124AF /* Services in Frameworks */,
 				606729F83018BAE4003124AF /* SocketIO in Frameworks */,
 				606729FE3018BB01003124AF /* WebRTC in Frameworks */,
+				60672A2D30190D24003124AF /* Login in Frameworks */,
 				606729FB3018BAF4003124AF /* Stinsen in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -57,12 +63,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		60672A2930190D21003124AF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		60BB2BD0300F9E1D0079F60B = {
 			isa = PBXGroup;
 			children = (
 				60BB2BDB300F9E1D0079F60B /* Meets */,
 				60672A0F3018C323003124AF /* Modules */,
 				60BB2BF2300F9E1F0079F60B /* Configs */,
+				60672A2F3019E3A6003124AF /* Tests */,
+				60672A2930190D21003124AF /* Frameworks */,
 				60BB2BDA300F9E1D0079F60B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -81,6 +96,14 @@
 				60BB2BF1300F9E1F0079F60B /* Version.xcconfig */,
 			);
 			path = Configs;
+			sourceTree = "<group>";
+		};
+		60672A2F3019E3A6003124AF /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				60672A2E3019E3A6003124AF /* Meets.xctestplan */,
+			);
+			path = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -109,6 +132,8 @@
 				606729F73018BAE4003124AF /* SocketIO */,
 				606729FA3018BAF4003124AF /* Stinsen */,
 				606729FD3018BB01003124AF /* WebRTC */,
+				60672A2A30190D21003124AF /* Services */,
+				60672A2C30190D24003124AF /* Login */,
 			);
 			productName = Meets;
 			productReference = 60BB2BD9300F9E1D0079F60B /* Meets.app */;
@@ -490,6 +515,14 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 606729FC3018BB01003124AF /* XCRemoteSwiftPackageReference "WebRTC" */;
 			productName = WebRTC;
+		};
+		60672A2A30190D21003124AF /* Services */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Services;
+		};
+		60672A2C30190D24003124AF /* Login */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Login;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

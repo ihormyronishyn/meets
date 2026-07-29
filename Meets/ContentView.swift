@@ -3,6 +3,8 @@
 //  Meets
 //
 
+import Login
+import Services
 import SwiftUI
 
 struct ContentView: View {
@@ -10,13 +12,7 @@ struct ContentView: View {
     // MARK: - Body
 
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        } //: VStack
-        .padding()
+        LoginView(viewModel: LoginViewModel(userAuthenticationService: UserAuthenticationService()))
     }
 }
 
