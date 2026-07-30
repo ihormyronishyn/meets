@@ -1,11 +1,11 @@
 //
-//  Call.swift
+//  Meet.swift
 //  Entities
 //
 
 import Foundation
 
-public struct Call: Equatable {
+public struct Meet: Equatable, Sendable {
 
     // MARK: - Properties
 

@@ -4,7 +4,9 @@
 //
 
 import Combine
+import Entities
 import Login
+import Room
 import Services
 import Stinsen
 import SwiftUI
@@ -15,18 +17,21 @@ final class AppCoordinator: NavigationCoordinatable {
     // MARK: - Properties
 
     @Root private var login = makeLogin
+    @Root private var room = makeRoom
 
     var stack = NavigationStack(initial: \AppCoordinator.login)
 
+    private let signalingService: SignalingServiceProtocol
     private let userAuthenticationService: UserAuthenticationServiceProtocol
 
     // MARK: - Init
 
-    init() {
+    init(server: Server) {
+        signalingService = SignalingService(url: server.signalingURL)
         userAuthenticationService = UserAuthenticationService()
 
         if userAuthenticationService.isAuthenticated {
-            // Set room as initial screen in navigation stack.
+            stack = NavigationStack(initial: \AppCoordinator.room)
         }
     }
 }
@@ -46,6 +51,27 @@ extension AppCoordinator: LoginRouting {
     // MARK: - Routing
 
     func didLogin() {
-        // Push room screen.
+        root(\.room)
+    }
+}
+
+// MARK: - Room
+
+extension AppCoordinator: RoomRouting {
+    func makeRoom() -> some View {
+        let roomViewModel = RoomViewModel(
+            signalingService: signalingService,
+            userAuthenticationService: userAuthenticationService,
+        )
+        roomViewModel.router = self
+        return RoomView(viewModel: roomViewModel)
+    }
+
+    func didLeaveRoom() {
+        root(\.login)
+    }
+
+    func didStartMeet(_ meet: Meet) {
+        // Push meet screen.
     }
 }

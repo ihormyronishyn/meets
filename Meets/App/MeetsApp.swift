@@ -14,7 +14,7 @@ struct MeetsApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationViewCoordinator(
-                AppCoordinator(),
+                AppCoordinator(server: .current),
             ).view()
         } //: WindowGroup
     }

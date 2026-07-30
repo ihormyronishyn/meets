@@ -37,6 +37,22 @@ public struct Peer: Identifiable, Codable, Equatable, Sendable {
 
 // MARK: - Preview
 
-public extension Peer {
-    static let preview = Peer(roomId: 1, username: "Jacob", isCaller: true)
-}
+#if DEBUG
+
+    public extension Peer {
+
+        /// People a canvas can borrow. The three cover the positions a room holds
+        /// at once, the person signed in and the two roles they can meet.
+        enum Preview {
+            /// The person a canvas is signed in as.
+            public static let local = Peer(roomId: 1, username: "Jacob", isCaller: true)
+
+            /// Somebody of the same role, so no meeting between them is possible.
+            public static let caller = Peer(roomId: 1, username: "Mary", isCaller: true)
+
+            /// Somebody of the opposite role, so a meeting can start.
+            public static let callee = Peer(roomId: 1, username: "Alex", isCaller: false)
+        }
+    }
+
+#endif

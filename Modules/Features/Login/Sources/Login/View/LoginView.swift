@@ -66,7 +66,7 @@ public struct LoginView: View {
             Text("Join a Room")
                 .font(.title)
                 .fontWeight(.bold)
-            Text("Enter your username and room identifier to join.")
+            Text("Enter your username and room identifier.")
                 .font(.subheadline)
                 .fontWeight(.medium)
                 .foregroundStyle(.secondary)

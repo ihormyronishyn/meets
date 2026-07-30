@@ -1,0 +1,28 @@
+// The base configuration of the target, and the home of every build setting
+// except the version, which lives alone in the file the release automation
+// owns and writes on its own.
+
+#include "Version.xcconfig"
+
+// A pair of slashes opens a comment here, so the one inside a URL is written
+// through an empty variable, which the build setting resolves away.
+SIGNALING_SERVER_URL = http:/$()/localhost:3000
+
+// The servers that help two peers find a path to each other, separated by a
+// comma. Only public discovery servers belong here, since anything in this file
+// ships inside the application. A relay that needs a name and a secret is
+// issued by the backend at runtime instead.
+ICE_SERVER_URLS = stun:stun.l.google.com:19302,stun:stun1.l.google.com:19302,stun:stun2.l.google.com:19302,stun:stun3.l.google.com:19302,stun:stun4.l.google.com:19302
+
+// The settings above reach the built application through the information
+// property list. The generated list accepts only the keys Xcode knows, so the
+// file below carries the ones this project adds, and the build merges the
+// generated keys into it, which keeps the version and the scene settings where
+// they are.
+INFOPLIST_FILE = Configs/Info.plist
+
+// Machine local values, such as a signaling server of your own. The file is
+// ignored by version control, and the optional form means a checkout without
+// one still builds. It comes last so a value set there wins over the defaults
+// above.
+#include? "Config.xcconfig"

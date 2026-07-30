@@ -38,6 +38,13 @@
         "identifier" : "UtilitiesTests",
         "name" : "UtilitiesTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/Features\/Room",
+        "identifier" : "RoomTests",
+        "name" : "RoomTests"
+      }
     }
   ],
   "version" : 1

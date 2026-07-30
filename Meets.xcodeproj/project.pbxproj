@@ -10,10 +10,13 @@
 		606729FB3018BAF4003124AF /* Stinsen in Frameworks */ = {isa = PBXBuildFile; productRef = 606729FA3018BAF4003124AF /* Stinsen */; };
 		60672A2B30190D21003124AF /* Services in Frameworks */ = {isa = PBXBuildFile; productRef = 60672A2A30190D21003124AF /* Services */; };
 		60672A2D30190D24003124AF /* Login in Frameworks */ = {isa = PBXBuildFile; productRef = 60672A2C30190D24003124AF /* Login */; };
+		60672A3130190D30003124AF /* Room in Frameworks */ = {isa = PBXBuildFile; productRef = 60672A3030190D30003124AF /* Room */; };
+		60672A3330190D31003124AF /* Entities in Frameworks */ = {isa = PBXBuildFile; productRef = 60672A3230190D31003124AF /* Entities */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		60672A2E3019E3A6003124AF /* Meets.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Meets.xctestplan; sourceTree = "<group>"; };
+		60672A3430190D32003124AF /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
 		60BB2BD9300F9E1D0079F60B /* Meets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Meets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60BB2BF1300F9E1F0079F60B /* Version.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Version.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -25,6 +28,7 @@
 				Core/Entities,
 				Core/Utilities,
 				Features/Login,
+				Features/Room,
 				Shared/Services,
 			);
 			target = 60BB2BD8300F9E1D0079F60B /* Meets */;
@@ -54,6 +58,8 @@
 			files = (
 				60672A2B30190D21003124AF /* Services in Frameworks */,
 				60672A2D30190D24003124AF /* Login in Frameworks */,
+				60672A3330190D31003124AF /* Entities in Frameworks */,
+				60672A3130190D30003124AF /* Room in Frameworks */,
 				606729FB3018BAF4003124AF /* Stinsen in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -99,6 +105,7 @@
 		60BB2BF2300F9E1F0079F60B /* Configs */ = {
 			isa = PBXGroup;
 			children = (
+				60672A3430190D32003124AF /* Base.xcconfig */,
 				60BB2BF1300F9E1F0079F60B /* Version.xcconfig */,
 			);
 			path = Configs;
@@ -130,6 +137,8 @@
 				606729FA3018BAF4003124AF /* Stinsen */,
 				60672A2A30190D21003124AF /* Services */,
 				60672A2C30190D24003124AF /* Login */,
+				60672A3230190D31003124AF /* Entities */,
+				60672A3030190D30003124AF /* Room */,
 			);
 			productName = Meets;
 			productReference = 60BB2BD9300F9E1D0079F60B /* Meets.app */;
@@ -350,7 +359,7 @@
 		};
 		60BB2BE5300F9E1F0079F60B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 60BB2BF1300F9E1F0079F60B /* Version.xcconfig */;
+			baseConfigurationReference = 60672A3430190D32003124AF /* Base.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -398,7 +407,7 @@
 		};
 		60BB2BE6300F9E1F0079F60B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 60BB2BF1300F9E1F0079F60B /* Version.xcconfig */;
+			baseConfigurationReference = 60672A3430190D32003124AF /* Base.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -491,6 +500,14 @@
 		60672A2C30190D24003124AF /* Login */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Login;
+		};
+		60672A3030190D30003124AF /* Room */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Room;
+		};
+		60672A3230190D31003124AF /* Entities */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Entities;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
