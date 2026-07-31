@@ -41,6 +41,13 @@
     },
     {
       "target" : {
+        "containerPath" : "container:Modules\/Features\/Meet",
+        "identifier" : "MeetTests",
+        "name" : "MeetTests"
+      }
+    },
+    {
+      "target" : {
         "containerPath" : "container:Modules\/Core\/Utilities",
         "identifier" : "UtilitiesTests",
         "name" : "UtilitiesTests"
