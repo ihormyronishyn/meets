@@ -191,3 +191,27 @@ public final class MeetViewModel {
         }
     }
 }
+
+// MARK: - Extension
+
+#if DEBUG
+
+    public extension MeetViewModel {
+
+        // MARK: - Preview
+
+        /// A view model wired to doubles, so a canvas draws the screen without
+        /// opening a socket and without turning on the camera.
+        ///
+        /// Neither side carries a track, so both pictures stay empty and what
+        /// the canvas shows is the panel and the frame around them.
+        static var preview: MeetViewModel {
+            MeetViewModel(
+                meet: Meet(localPeer: .Preview.local, remotePeer: .Preview.callee),
+                signalingService: .preview,
+                webRTCService: .preview,
+            )
+        }
+    }
+
+#endif
