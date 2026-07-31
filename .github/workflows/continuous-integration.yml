@@ -163,13 +163,51 @@ jobs:
             exit 1
           fi
 
+          # A quiet run says nothing about the tests themselves, so the counts
+          # are read back from the bundle it leaves behind. A run that tested
+          # nothing is refused, because it passes as quietly as a run that
+          # tested everything, and the two must not look alike.
+          results=$(mktemp -d)
+
+          report() {
+            name=$1
+            bundle=$2
+
+            summary=$(xcrun xcresulttool get test-results summary --path "$bundle" --format json)
+            total=$(echo "$summary" | jq -r '.totalTestCount')
+            passed=$(echo "$summary" | jq -r '.passedTests')
+            failed=$(echo "$summary" | jq -r '.failedTests')
+            skipped=$(echo "$summary" | jq -r '.skippedTests')
+
+            echo "$name, $total tests, $passed passed, $failed failed, $skipped skipped."
+
+            if [ "$total" -eq 0 ]; then
+              echo "::error::$name ran no tests at all."
+              exit 1
+            fi
+          }
+
           if [ "$app_has_tests" = true ]; then
             echo "Testing the application and everything its plan names"
-            xcodebuild test -project Meets.xcodeproj -scheme Meets -destination "id=$device" -quiet
+
+            # The status is kept rather than acted on at once, so the counts are
+            # reported even when the run itself failed.
+            status=0
+            xcodebuild test -project Meets.xcodeproj -scheme Meets -destination "id=$device" \
+              -resultBundlePath "$results/application.xcresult" -quiet || status=$?
+
+            report "The application" "$results/application.xcresult"
+            [ "$status" -eq 0 ] || exit "$status"
           fi
 
           for dir in "${module_dirs[@]}"; do
             module=$(basename "$dir")
             echo "Testing module $module"
-            ( cd "$dir" && xcodebuild test -scheme "$module" -destination "id=$device" -quiet )
+
+            status=0
+            ( cd "$dir" && xcodebuild test -scheme "$module" -destination "id=$device" \
+              -resultBundlePath "$results/$module.xcresult" -quiet ) || status=$?
+
+            report "The module $module" "$results/$module.xcresult"
+            [ "$status" -eq 0 ] || exit "$status"
           done
