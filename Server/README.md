@@ -1,0 +1,54 @@
+# Signaling server
+
+A small server the application talks to while a meeting is being set up. It
+carries invitations, session descriptions, and candidates between the two sides
+and holds no state of its own beyond who is currently in which room. It is a
+tool for development, it is not part of what ships.
+
+## Running
+
+```bash
+cd Server
+npm install
+npm start
+```
+
+It listens on port `3000`, which is where the application looks by default,
+through `SIGNALING_SERVER_URL` in `Configs/Base.xcconfig`. Set `PORT` to move
+it, and change that setting to match.
+
+## Handshake
+
+A client announces itself in the query of the connection, and a query carries
+strings, so the server reads the number and the flag back out.
+
+| Key | Meaning |
+| --- | --- |
+| `roomId` | the room to join |
+| `username` | the name the other side sees |
+| `isCaller` | whether this side starts the meeting |
+
+## Events
+
+The names match `PeerEvent.Name` on the client, and the payloads match the
+types it decodes.
+
+| Event | Direction | Payload |
+| --- | --- | --- |
+| `room_user_joined` | to the room, and to a newcomer for each person already there | a peer |
+| `room_user_left` | to the room | a peer |
+| `offer` | relayed to the room | an invitation or a session description |
+| `answer` | relayed to the room | an invitation or a session description |
+| `candidate` | relayed to the room | a candidate |
+
+Everything except an invitation reaches the whole room rather than one person,
+because only an invitation names its addressee. The client drops what is not
+meant for it, which is enough while a room holds two people.
+
+## Versions
+
+The client pins `socket.io-client-swift` to `16.1.1`, which speaks the protocol
+of Socket.IO `4`, so the dependency here has to stay on that major version.
+
+The package carries no version of its own. The one version this repository
+tracks lives in `Configs/Version.xcconfig` and belongs to the application.
