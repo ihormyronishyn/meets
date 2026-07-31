@@ -12,6 +12,7 @@
 		60672A2D30190D24003124AF /* Login in Frameworks */ = {isa = PBXBuildFile; productRef = 60672A2C30190D24003124AF /* Login */; };
 		60672A3130190D30003124AF /* Room in Frameworks */ = {isa = PBXBuildFile; productRef = 60672A3030190D30003124AF /* Room */; };
 		60672A3330190D31003124AF /* Entities in Frameworks */ = {isa = PBXBuildFile; productRef = 60672A3230190D31003124AF /* Entities */; };
+		60672A3930190D33003124AF /* Meet in Frameworks */ = {isa = PBXBuildFile; productRef = 60672A3830190D33003124AF /* Meet */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +64,7 @@
 				60672A2D30190D24003124AF /* Login in Frameworks */,
 				60672A3330190D31003124AF /* Entities in Frameworks */,
 				60672A3130190D30003124AF /* Room in Frameworks */,
+				60672A3930190D33003124AF /* Meet in Frameworks */,
 				606729FB3018BAF4003124AF /* Stinsen in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -143,6 +145,7 @@
 				60672A2C30190D24003124AF /* Login */,
 				60672A3230190D31003124AF /* Entities */,
 				60672A3030190D30003124AF /* Room */,
+				60672A3830190D33003124AF /* Meet */,
 			);
 			productName = Meets;
 			productReference = 60BB2BD9300F9E1D0079F60B /* Meets.app */;
@@ -512,6 +515,10 @@
 		60672A3230190D31003124AF /* Entities */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Entities;
+		};
+		60672A3830190D33003124AF /* Meet */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Meet;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
