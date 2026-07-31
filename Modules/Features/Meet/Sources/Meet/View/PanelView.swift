@@ -49,6 +49,10 @@ struct PanelView: View {
         .frame(maxHeight: .infinity)
         .background(Material.bar)
         .clipShape(.capsule)
+        // The label and the name are one thought, so they are read as one
+        // rather than as two neighbours a reader has to join up.
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Meeting with \(peer.username)")
     }
 
     // MARK: - Leave
@@ -67,6 +71,10 @@ struct PanelView: View {
                 .background(.red)
                 .clipShape(.circle)
         } //: Button
+        // The button carries no text, so a reader would otherwise hear the
+        // name of the symbol, and nothing about what pressing it does.
+        .accessibilityLabel("Leave meet")
+        .accessibilityHint("Asks to confirm, then ends the meeting.")
     }
 }
 

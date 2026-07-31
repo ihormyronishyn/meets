@@ -94,6 +94,10 @@ public struct RoomView: View {
     private var toggle: some View {
         Toggle("Caller", isOn: $viewModel.isCaller)
             .disabled(viewModel.isConnected || viewModel.isConnecting)
+            // The role decides who opens a meeting, and it is fixed for as
+            // long as the room is reached, which the dimming alone does not
+            // explain.
+            .accessibilityHint("Decides which side starts a meeting. Fixed while the room is connected.")
     }
 
     // MARK: - Peers

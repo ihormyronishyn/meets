@@ -22,8 +22,15 @@ struct PeerView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            headline
-            username
+            // The label above the name only exists to introduce it, so the two
+            // are read as one element and the button keeps its own.
+            VStack(alignment: .leading) {
+                headline
+                username
+            } //: VStack
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel("Peer \(peer.username)")
+
             start
         } //: VStack
     }
@@ -52,6 +59,8 @@ struct PeerView: View {
                 Image(systemName: "video.fill")
                     .font(.callout)
                     .foregroundStyle(.mint)
+                    // The text beside it already says what the button does.
+                    .accessibilityHidden(true)
 
                 Text("Start Meet")
             } //: HStack
@@ -61,6 +70,7 @@ struct PeerView: View {
         .controlSize(.extraLarge)
         .buttonStyle(.glass)
         .disabled(!isAvailable)
+        .accessibilityHint("Starts a video meeting with this peer.")
     }
 }
 

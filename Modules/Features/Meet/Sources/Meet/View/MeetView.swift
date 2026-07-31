@@ -22,6 +22,11 @@ public struct MeetView: View {
 
     public var body: some View {
         WebRTCVideoView(track: viewModel.remoteVideoTrack)
+            // A rendered picture says nothing to a reader on its own, so both
+            // videos are named, and each says whether it carries anything yet.
+            .accessibilityElement()
+            .accessibilityLabel("Video of \(viewModel.meet.remotePeer.username)")
+            .accessibilityValue(viewModel.remoteVideoTrack == nil ? "Waiting" : "Live")
             .navigationBarBackButtonHidden()
             .ignoresSafeArea(.container, edges: .all)
             .safeAreaInset(edge: .top) {
@@ -64,6 +69,9 @@ public struct MeetView: View {
             .background(Material.bar)
             .clipShape(.rect(cornerRadius: 16))
             .padding()
+            .accessibilityElement()
+            .accessibilityLabel("Your own video")
+            .accessibilityValue(viewModel.localVideoTrack == nil ? "Waiting" : "Live")
     }
 }
 
