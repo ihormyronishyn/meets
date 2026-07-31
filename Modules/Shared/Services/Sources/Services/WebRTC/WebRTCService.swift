@@ -40,7 +40,7 @@ public actor WebRTCService: WebRTCServiceProtocol {
 
     /// A recording that stands in for the front camera where there is none,
     /// played into the same source a real camera would feed.
-    private static let simulatorFrontCameraFileName = "SimulatorFrontCamera.mp4"
+    private static let simulatorFrontCameraFileName = "SimulatorFrontCameraVideo.mp4"
 
     // MARK: - Properties
 
