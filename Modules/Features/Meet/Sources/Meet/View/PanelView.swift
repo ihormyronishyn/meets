@@ -10,6 +10,10 @@ struct PanelView: View {
 
     // MARK: - Properties
 
+    /// The panel is one row tall, and the button that ends a meeting is as wide
+    /// as it is tall, so the two are read from here.
+    private static let height: CGFloat = 60
+
     let peer: Peer
     let action: (Action) -> Void
 
@@ -21,23 +25,12 @@ struct PanelView: View {
 
     var body: some View {
         HStack(spacing: 10) {
-            bar
-        } //: HStack
-        .frame(height: 60)
-        .padding(16)
-        .environment(\.colorScheme, .dark)
-    }
-
-    // MARK: - Bar
-
-    private var bar: some View {
-        Group {
             username
             leave
-        } //: Group
-        .frame(maxHeight: .infinity)
-        .background(Material.bar)
-        .clipShape(.capsule)
+        } //: HStack
+        .frame(height: Self.height)
+        .padding(16)
+        .environment(\.colorScheme, .dark)
     }
 
     // MARK: - Peer
@@ -53,21 +46,26 @@ struct PanelView: View {
         } //: HStack
         .fontWeight(.semibold)
         .padding(.horizontal, 20)
+        .frame(maxHeight: .infinity)
+        .background(Material.bar)
+        .clipShape(.capsule)
     }
 
     // MARK: - Leave
 
+    /// The width matches the height of the panel, so the shape is a circle
+    /// rather than a capsule, and the red reaches its edge because this one
+    /// carries no material behind it.
     private var leave: some View {
         Button {
             action(.leaveMeet)
         } label: {
             Image(systemName: "phone.down.fill")
-                .font(.callout)
+                .font(.title2)
                 .foregroundStyle(.white)
-                .frame(width: 36, height: 36)
+                .frame(width: Self.height, height: Self.height)
                 .background(.red)
                 .clipShape(.circle)
-                .padding(.horizontal, 15)
         } //: Button
     }
 }
