@@ -55,6 +55,13 @@
     },
     {
       "target" : {
+        "containerPath" : "container:Modules\/Core\/Entities",
+        "identifier" : "EntitiesTests",
+        "name" : "EntitiesTests"
+      }
+    },
+    {
+      "target" : {
         "containerPath" : "container:Modules\/Features\/Room",
         "identifier" : "RoomTests",
         "name" : "RoomTests"
