@@ -22,6 +22,7 @@ let package = Package(
         .package(path: "../../Core/Entities"),
         .package(path: "../../Core/Utilities"),
         .package(path: "../../Shared/Components"),
+        .package(path: "../../Shared/DesignSystem"),
         .package(path: "../../Shared/Services"),
         .package(url: "https://github.com/stasel/WebRTC", exact: "150.0.0"),
     ],
@@ -32,6 +33,7 @@ let package = Package(
             name: "Meet",
             dependencies: [
                 "Components",
+                "DesignSystem",
                 "Entities",
                 "Services",
                 "Utilities",

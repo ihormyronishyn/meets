@@ -170,7 +170,7 @@ public struct RoomView: View {
                 .frame(maxWidth: .infinity)
         } //: Button
         .disabled(viewModel.isConnecting)
-        .tint(viewModel.isConnected ? .red : .orange)
+        .tint(viewModel.isConnected ? .red : .accentColor)
         .fontWeight(.medium)
         .buttonStyle(.glassProminent)
         .controlSize(.extraLarge)

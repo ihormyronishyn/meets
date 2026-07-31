@@ -34,6 +34,13 @@
     },
     {
       "target" : {
+        "containerPath" : "container:Modules\/Shared\/DesignSystem",
+        "identifier" : "DesignSystemTests",
+        "name" : "DesignSystemTests"
+      }
+    },
+    {
+      "target" : {
         "containerPath" : "container:Modules\/Features\/Login",
         "identifier" : "LoginTests",
         "name" : "LoginTests"
