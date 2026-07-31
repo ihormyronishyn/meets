@@ -18,7 +18,6 @@ public struct Peer: Identifiable, Codable, Equatable, Sendable {
     public let roomId: Int?
     public let username: String
     public let isCaller: Bool?
-    public var isCalling: Bool?
 
     // MARK: - Init
 
@@ -26,12 +25,6 @@ public struct Peer: Identifiable, Codable, Equatable, Sendable {
         self.roomId = roomId
         self.username = username
         self.isCaller = isCaller
-    }
-
-    // MARK: - Keys
-
-    enum CodingKeys: String, CodingKey {
-        case roomId, username, isCaller
     }
 }
 

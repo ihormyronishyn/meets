@@ -77,12 +77,14 @@ final class RoomViewModelTests {
     @Test
     func aCalleeSeesOnlyThePeerThatIsCallingIt() {
         // Arrange.
+        userAuthenticationService.login(username: "John", roomId: 7)
         viewModel.isCaller = false
 
-        var silent = Self.peer(named: "Alex", isCaller: true)
-        var calling = Self.peer(named: "Mary", isCaller: true)
-        calling.isCalling = true
-        silent.isCalling = nil
+        let silent = Self.peer(named: "Alex", isCaller: true)
+        let calling = Self.peer(named: "Mary", isCaller: true)
+
+        // Act.
+        viewModel.handle(event: Self.offer(from: calling, to: Self.peer(named: "John", isCaller: false)))
 
         // Assert.
         #expect(viewModel.isPeerAvailable(silent) == false)
@@ -116,6 +118,22 @@ final class RoomViewModelTests {
     }
 
     @Test
+    func aLeavingPeerForgetsTheCallItWasMaking() {
+        // Arrange.
+        userAuthenticationService.login(username: "John", roomId: 7)
+
+        let caller = Self.peer(named: "Alex", isCaller: true)
+        viewModel.handle(event: Self.offer(from: caller, to: Self.peer(named: "John", isCaller: false)))
+
+        // Act.
+        viewModel.handle(event: .roomUserLeft(caller))
+
+        // Assert.
+        // A name that comes back later is somebody who has not called yet.
+        #expect(viewModel.incomingCalls.isEmpty)
+    }
+
+    @Test
     func anOfferAddressedToUsMarksTheCallerAsCalling() {
         // Arrange.
         userAuthenticationService.login(username: "John", roomId: 7)
@@ -127,10 +145,27 @@ final class RoomViewModelTests {
         viewModel.handle(event: Self.offer(from: caller, to: Self.peer(named: "John", isCaller: false)))
 
         // Assert.
-        // The caller already sat in the room, so the entry is replaced rather
-        // than appended, which is what keeps the flag and the count right.
+        // The caller already sat in the room, so joining it a second time adds
+        // nobody, and the call is remembered beside the room rather than on it.
         #expect(viewModel.peers.count == 1)
-        #expect(viewModel.peers.first?.isCalling == true)
+        #expect(viewModel.incomingCalls == ["Alex"])
+    }
+
+    @Test
+    func anOfferFromSomebodyTheRoomHasNotReportedYetStillJoins() {
+        // Arrange.
+        userAuthenticationService.login(username: "John", roomId: 7)
+
+        let caller = Self.peer(named: "Alex", isCaller: true)
+
+        // Act.
+        viewModel.handle(event: Self.offer(from: caller, to: Self.peer(named: "John", isCaller: false)))
+
+        // Assert.
+        // An offer can outrun the report that its sender is in the room, and a
+        // callee that ignored it would have nobody to answer.
+        #expect(viewModel.peers.map(\.username) == ["Alex"])
+        #expect(viewModel.incomingCalls == ["Alex"])
     }
 
     @Test
@@ -145,7 +180,7 @@ final class RoomViewModelTests {
         viewModel.handle(event: Self.offer(from: caller, to: Self.peer(named: "Mary", isCaller: false)))
 
         // Assert.
-        #expect(viewModel.peers.first?.isCalling == nil)
+        #expect(viewModel.incomingCalls.isEmpty)
     }
 
     @Test
@@ -225,13 +260,17 @@ final class RoomViewModelTests {
     @Test
     func disconnectingEmptiesTheRoom() async {
         // Arrange.
-        viewModel.handle(event: .roomUserJoined(Self.peer(named: "Alex", isCaller: false)))
+        userAuthenticationService.login(username: "John", roomId: 7)
+
+        let caller = Self.peer(named: "Alex", isCaller: true)
+        viewModel.handle(event: Self.offer(from: caller, to: Self.peer(named: "John", isCaller: false)))
 
         // Act.
         await viewModel.disconnect()
 
         // Assert.
         #expect(viewModel.peers.isEmpty)
+        #expect(viewModel.incomingCalls.isEmpty)
         #expect(await signalingService.disconnectCallCount == 1)
     }
 
