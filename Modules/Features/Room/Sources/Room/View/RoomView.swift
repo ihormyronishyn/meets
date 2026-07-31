@@ -24,7 +24,7 @@ public struct RoomView: View {
         if let localPeer = viewModel.localPeer, let roomId = localPeer.roomId {
             form
                 .navigationTitle(String(roomId))
-                .navigationSubtitle(Text("Room ID"))
+                .navigationSubtitle(Text(.roomSubtitle))
                 .toolbarTitleDisplayMode(.large)
         } else {
             form
@@ -45,22 +45,29 @@ public struct RoomView: View {
         .safeAreaBar(edge: .bottom) {
             connection
         }
-        .alert("Are you sure?", isPresented: $viewModel.isLeaveRoomConfirmationAlertPresented) {
-            Button("Leave Room", role: .destructive) {
+        .alert(
+            Text(.roomLeaveConfirmationTitle),
+            isPresented: $viewModel.isLeaveRoomConfirmationAlertPresented,
+        ) {
+            Button(role: .destructive) {
                 Task {
                     await viewModel.leaveRoom()
                 }
+            } label: {
+                Text(.roomLeaveTitle)
             } //: Button
         } message: {
-            Text("Are you sure you want to leave the room?")
+            Text(.roomLeaveConfirmationMessage)
         }
     }
 
     // MARK: - Leave
 
     private var leave: some View {
-        Button("Leave Room") {
+        Button {
             viewModel.isLeaveRoomConfirmationAlertPresented = true
+        } label: {
+            Text(.roomLeaveTitle)
         } //: Button
     }
 
@@ -84,7 +91,7 @@ public struct RoomView: View {
             LabeledContent {
                 Text(localPeer.username)
             } label: {
-                Text("Username")
+                Text(.roomUsernameTitle)
             } //: LabeledContent
         }
     }
@@ -92,12 +99,13 @@ public struct RoomView: View {
     // MARK: - Toggle
 
     private var toggle: some View {
-        Toggle("Caller", isOn: $viewModel.isCaller)
-            .disabled(viewModel.isConnected || viewModel.isConnecting)
-            // The role decides who opens a meeting, and it is fixed for as
-            // long as the room is reached, which the dimming alone does not
-            // explain.
-            .accessibilityHint("Decides which side starts a meeting. Fixed while the room is connected.")
+        Toggle(isOn: $viewModel.isCaller) {
+            Text(.roomCallerTitle)
+        } //: Toggle
+        .disabled(viewModel.isConnected || viewModel.isConnecting)
+        // The role decides who opens a meeting, and it is fixed for as long as
+        // the room is reached, which the dimming alone does not explain.
+        .accessibilityHint(Text(.roomCallerHint))
     }
 
     // MARK: - Peers
@@ -105,7 +113,7 @@ public struct RoomView: View {
     @ViewBuilder
     private var peers: some View {
         if viewModel.isConnected, viewModel.peers.isEmpty {
-            Text("No peers in the room yet.")
+            Text(.roomPeersEmpty)
                 .foregroundStyle(.secondary)
         } else {
             ForEach(viewModel.peers) { peer in
@@ -125,16 +133,16 @@ public struct RoomView: View {
     private var failure: some View {
         // A room that is full and a room that could not be reached both leave the
         // screen looking untouched, so each says what happened in its own words.
-        let message: String? = if viewModel.isRoomFull {
-            "This room already holds two people. Leave and try another one."
+        let message: Text? = if viewModel.isRoomFull {
+            Text(.roomFailureFull)
         } else if viewModel.hasFailedToConnect {
-            "Could not reach the room. Check the connection and try again."
+            Text(.roomFailureUnreachable)
         } else {
             nil
         }
 
         if let message {
-            Text(message)
+            message
                 .font(.footnote)
                 .foregroundStyle(.red)
         }
@@ -149,16 +157,16 @@ public struct RoomView: View {
             }
         } label: {
             let title = if viewModel.isConnecting {
-                "Connecting"
+                Text(.roomConnectionConnecting)
             } else if viewModel.isConnected {
-                "Disconnect"
+                Text(.roomConnectionDisconnect)
             } else if viewModel.hasFailedToConnect || viewModel.isRoomFull {
-                "Try Again"
+                Text(.roomConnectionRetry)
             } else {
-                "Connect"
+                Text(.roomConnectionConnect)
             }
 
-            Text(title)
+            title
                 .frame(maxWidth: .infinity)
         } //: Button
         .disabled(viewModel.isConnecting)

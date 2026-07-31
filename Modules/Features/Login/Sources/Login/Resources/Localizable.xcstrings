@@ -1,0 +1,78 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "login.heading" : {
+      "comment" : "The heading of the screen.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Join a Room"
+          }
+        }
+      }
+    },
+    "login.join.hint" : {
+      "comment" : "What pressing the button leads to, read by an assistive reader.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Joins the room."
+          }
+        }
+      }
+    },
+    "login.join.title" : {
+      "comment" : "The button that signs the person in.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Join Room"
+          }
+        }
+      }
+    },
+    "login.room.title" : {
+      "comment" : "The field holding the number of the room to join.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Room ID"
+          }
+        }
+      }
+    },
+    "login.subheading" : {
+      "comment" : "The subheading under the heading of the screen.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter your username and room identifier."
+          }
+        }
+      }
+    },
+    "login.username.title" : {
+      "comment" : "The field holding the name the other side sees.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Username"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

@@ -25,8 +25,8 @@ public struct MeetView: View {
             // A rendered picture says nothing to a reader on its own, so both
             // videos are named, and each says whether it carries anything yet.
             .accessibilityElement()
-            .accessibilityLabel("Video of \(viewModel.meet.remotePeer.username)")
-            .accessibilityValue(viewModel.remoteVideoTrack == nil ? "Waiting" : "Live")
+            .accessibilityLabel(Text(.meetRemoteVideoLabel(viewModel.meet.remotePeer.username)))
+            .accessibilityValue(Self.presence(isLive: viewModel.remoteVideoTrack != nil))
             .navigationBarBackButtonHidden()
             .ignoresSafeArea(.container, edges: .all)
             .safeAreaInset(edge: .top) {
@@ -35,14 +35,19 @@ public struct MeetView: View {
             .overlay(alignment: .bottomTrailing) {
                 local
             }
-            .alert("Are you sure?", isPresented: $viewModel.isLeaveMeetConfirmationAlertPresented) {
-                Button("Leave Meet", role: .destructive) {
+            .alert(
+                Text(.meetLeaveConfirmationTitle),
+                isPresented: $viewModel.isLeaveMeetConfirmationAlertPresented,
+            ) {
+                Button(role: .destructive) {
                     Task {
                         await viewModel.leaveMeet()
                     }
+                } label: {
+                    Text(.meetLeaveConfirmationAction)
                 } //: Button
             } message: {
-                Text("Are you sure you want to leave the meet?")
+                Text(.meetLeaveConfirmationMessage)
             }
             .task {
                 await viewModel.start()
@@ -70,8 +75,16 @@ public struct MeetView: View {
             .clipShape(.rect(cornerRadius: 16))
             .padding()
             .accessibilityElement()
-            .accessibilityLabel("Your own video")
-            .accessibilityValue(viewModel.localVideoTrack == nil ? "Waiting" : "Live")
+            .accessibilityLabel(Text(.meetLocalVideoLabel))
+            .accessibilityValue(Self.presence(isLive: viewModel.localVideoTrack != nil))
+    }
+
+    // MARK: - Presence
+
+    /// What a picture is worth saying about itself, since a reader cannot tell
+    /// an empty frame from one carrying a video.
+    private static func presence(isLive: Bool) -> Text {
+        isLive ? Text(.meetVideoLive) : Text(.meetVideoWaiting)
     }
 }
 

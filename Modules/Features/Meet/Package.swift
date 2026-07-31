@@ -5,6 +5,9 @@ import PackageDescription
 
 let package = Package(
     name: "Meet",
+    // The strings of this screen are carried by the module that draws it, so
+    // the catalog beside them is what the package ships and looks up.
+    defaultLocalization: "en",
     platforms: [
         .iOS(.v26),
     ],
@@ -33,6 +36,9 @@ let package = Package(
                 "Services",
                 "Utilities",
                 .product(name: "WebRTC", package: "WebRTC"),
+            ],
+            resources: [
+                .process("Resources"),
             ],
         ),
         .testTarget(
