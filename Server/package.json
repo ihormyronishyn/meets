@@ -1,0 +1,15 @@
+{
+  "name": "meets-signaling-server",
+  "private": true,
+  "description": "Signaling server the Meets application talks to during development.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "socket.io": "^4.7.5"
+  }
+}

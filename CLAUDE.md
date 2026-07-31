@@ -16,6 +16,7 @@
 - Shared and feature code lives in local packages under `Modules/`.
 - Build settings live in `Configs/`, developer scripts in `Scripts/`.
 - The pipeline and its configuration live in `.github/`.
+- The signaling server lives in `Server/`, a Node package used in development only, outside the Swift toolchain and outside the release.
 - A module may depend on the layers below it, never on the layers above or on a sibling.
 
 ## Architecture
