@@ -3,6 +3,7 @@
 //  Meet
 //
 
+import DesignSystem
 import Entities
 import SwiftUI
 
@@ -64,7 +65,7 @@ struct PanelView: View {
         Button {
             action(.leaveMeet)
         } label: {
-            Image(systemName: "phone.down.fill")
+            Image(.phoneDownFill)
                 .font(.title2)
                 .foregroundStyle(.white)
                 .frame(width: Self.height, height: Self.height)

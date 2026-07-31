@@ -3,6 +3,7 @@
 //  Room
 //
 
+import DesignSystem
 import Entities
 import SwiftUI
 
@@ -56,7 +57,7 @@ struct PeerView: View {
             action(.startMeet)
         } label: {
             HStack(spacing: 6) {
-                Image(systemName: "video.fill")
+                Image(.videoFill)
                     .font(.callout)
                     .foregroundStyle(.mint)
                     // The text beside it already says what the button does.

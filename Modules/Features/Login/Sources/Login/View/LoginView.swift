@@ -122,7 +122,7 @@ public struct LoginView: View {
         // it carries nothing a person needs in order to act. That the button
         // waits for both fields is announced by the dimming itself.
         .accessibilityHint(Text(.loginJoinHint))
-        .tint(.orange)
+        .tint(.accentColor)
         .fontWeight(.medium)
         .buttonStyle(.glassProminent)
         .controlSize(.extraLarge)

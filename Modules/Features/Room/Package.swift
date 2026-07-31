@@ -21,6 +21,7 @@ let package = Package(
     dependencies: [
         .package(path: "../../Core/Entities"),
         .package(path: "../../Core/Utilities"),
+        .package(path: "../../Shared/DesignSystem"),
         .package(path: "../../Shared/Services"),
     ],
     targets: [
@@ -29,6 +30,7 @@ let package = Package(
         .target(
             name: "Room",
             dependencies: [
+                "DesignSystem",
                 "Entities",
                 "Services",
                 "Utilities",
