@@ -211,3 +211,39 @@ jobs:
             report "The module $module" "$results/$module.xcresult"
             [ "$status" -eq 0 ] || exit "$status"
           done
+
+  # The signaling server is a tool for development written in another language,
+  # so it neither builds nor ships with the application and has nothing to do
+  # with the Apple toolchain. It runs on its own, on a cheaper machine, and
+  # beside the gate above rather than after it.
+  server:
+    name: Server
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: Server
+
+    steps:
+      - uses: actions/checkout@v7
+
+      # The version is pinned here the way the language tools are pinned in the
+      # mint file, so the machine of a contributor and the runner agree. The
+      # cache is keyed on the lock file beside it.
+      - name: Install Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: Server/package-lock.json
+
+      # A clean install refuses a lock file that has drifted from the manifest,
+      # which is the failure a contributor would otherwise meet on their own
+      # machine and nowhere else.
+      - name: Install
+        run: npm ci
+
+      # The server is started by hand, so nothing here would ever notice a file
+      # that does not parse until somebody tried to hold a meeting.
+      - name: Check
+        run: node --check index.js
