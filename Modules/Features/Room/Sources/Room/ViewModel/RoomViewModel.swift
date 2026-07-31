@@ -45,6 +45,13 @@ public final class RoomViewModel {
         signalingConnectionState == .failed
     }
 
+    /// Whether the room turned this person away because it already holds the
+    /// two a meeting is between. Trying again leads nowhere, so the screen says
+    /// something other than what it says about a connection that went wrong.
+    var isRoomFull: Bool {
+        signalingConnectionState == .roomIsFull
+    }
+
     private let signalingService: SignalingServiceProtocol
     private let userAuthenticationService: UserAuthenticationServiceProtocol
 
@@ -170,7 +177,9 @@ public final class RoomViewModel {
                 guard let self else { return }
                 signalingConnectionState = state
 
-                if state == .disconnected {
+                // A refusal leaves the socket closed just as a leave does, so
+                // whatever the previous connection gathered goes with it.
+                if state == .disconnected || state == .roomIsFull {
                     removeAllPeers()
                 }
             }

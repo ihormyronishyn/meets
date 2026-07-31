@@ -19,6 +19,12 @@ public actor SignalingService: SignalingServiceProtocol {
         case peerEvent(PeerEvent)
     }
 
+    // MARK: - Events
+
+    /// The server names this when it turns a connection away, and it is not a
+    /// peer event, so it is listened for on its own.
+    private static let roomFullEventName = "room_full"
+
     // MARK: - Properties
 
     private var manager: SocketManager?
@@ -85,9 +91,15 @@ public actor SignalingService: SignalingServiceProtocol {
         guard forwardTask == nil else { return }
 
         forwardTask = Task { [connectionStateBroadcaster, peerEventBroadcaster, signalStream] in
+            // The filter remembers one state at a time and lives inside the
+            // single reader of the stream, so it is reached in arrival order
+            // and by nobody else.
+            var filter = ConnectionStateFilter()
+
             for await signal in signalStream {
                 switch signal {
                 case let .connectionState(state):
+                    guard filter.allows(state) else { continue }
                     await connectionStateBroadcaster.yield(state)
                 case let .peerEvent(event):
                     await peerEventBroadcaster.yield(event)
@@ -118,6 +130,10 @@ public actor SignalingService: SignalingServiceProtocol {
         socket?.on(clientEvent: .error) { [signalContinuation] data, _ in
             debugPrint("Signaling socket reported an error: \(data).")
             signalContinuation.yield(.connectionState(.failed))
+        }
+
+        socket?.on(Self.roomFullEventName) { [signalContinuation] _, _ in
+            signalContinuation.yield(.connectionState(.roomIsFull))
         }
 
         for name in PeerEvent.Name.allCases {

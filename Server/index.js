@@ -3,6 +3,12 @@ const { Server } = require('socket.io');
 
 const PORT = Number(process.env.PORT) || 3000;
 
+// A meeting has two sides, and nothing said between them names its addressee
+// apart from an invitation, so a third person would receive descriptions and
+// candidates meant for somebody else and apply them to their own connection.
+// The room is therefore closed once it holds a pair.
+const CAPACITY = 2;
+
 const server = http.createServer();
 const io = new Server(server, { cors: { origin: '*' } });
 
@@ -23,6 +29,19 @@ io.on('connection', async (socket) => {
 
     if (!roomId || !username) {
         console.log(`Refused ${socket.id}, the handshake carries no room or no username.`);
+        socket.disconnect(true);
+        return;
+    }
+
+    // The room is counted through the adapter rather than by fetching its
+    // sockets, because fetching suspends, and two people arriving together
+    // would both count a room neither of them had joined yet and both be let
+    // in. Reading and joining without an await between them cannot interleave.
+    const occupants = io.sockets.adapter.rooms.get(roomId)?.size ?? 0;
+
+    if (occupants >= CAPACITY) {
+        console.log(`Refused ${username}, room ${roomId} already holds ${occupants}.`);
+        socket.emit('room_full', { roomId: Number(roomId), capacity: CAPACITY });
         socket.disconnect(true);
         return;
     }
