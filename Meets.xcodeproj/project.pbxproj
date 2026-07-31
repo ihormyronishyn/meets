@@ -29,6 +29,7 @@
 				Core/Entities,
 				Core/Utilities,
 				Features/Login,
+				Features/Meet,
 				Features/Room,
 				Shared/Components,
 				Shared/Services,
