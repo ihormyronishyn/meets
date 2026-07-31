@@ -1,12 +1,45 @@
-# Keeps the pinned workflow actions current. The language tools are pinned in
-# the mint file and bumped deliberately, so actions are the only ecosystem
-# watched here. The commit prefix keeps the pull request title conventional,
-# the title gate applies to these pull requests like any other.
+# Keeps the dependencies of the repository current. The language tools stay out
+# of this, they are pinned in the mint file and bumped deliberately. The commit
+# prefix keeps every pull request title conventional, the title gate applies to
+# these pull requests like any other.
 version: 2
 updates:
+  # The pinned workflow actions.
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
     commit-message:
       prefix: "ci"
+
+  # The dependencies of the local packages. Each package sits one level under
+  # its layer, so the pattern reaches all of them and picks up a new one on its
+  # own, without a list to keep in step.
+  #
+  # They arrive as one pull request rather than one for each package. The same
+  # dependency is pinned to an exact version in several manifests, and moving
+  # only some of them would leave versions that cannot resolve together.
+  #
+  # A dependency declared in the Xcode project rather than in a manifest stays
+  # outside this, since nothing here reads the project file. At the moment that
+  # is the navigation library, which is bumped by hand.
+  - package-ecosystem: "swift"
+    directories:
+      - "/Modules/*/*"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "build"
+    groups:
+      packages:
+        patterns:
+          - "*"
+
+  # The signaling server, which is a tool for development rather than part of
+  # the release, so its bumps stay out of the changelog.
+  - package-ecosystem: "npm"
+    directory: "/Server"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "chore"
