@@ -6,5 +6,9 @@
 	<string>$(SIGNALING_SERVER_URL)</string>
 	<key>IceServerURLs</key>
 	<string>$(ICE_SERVER_URLS)</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Uses the camera to capture video during a meeting.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Uses the microphone to capture audio during a meeting.</string>
 </dict>
 </plist>

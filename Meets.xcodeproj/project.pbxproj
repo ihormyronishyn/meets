@@ -17,6 +17,7 @@
 /* Begin PBXFileReference section */
 		60672A2E3019E3A6003124AF /* Meets.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Meets.xctestplan; sourceTree = "<group>"; };
 		60672A3430190D32003124AF /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
+		60672A3630190D32003124AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		60BB2BD9300F9E1D0079F60B /* Meets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Meets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60BB2BF1300F9E1F0079F60B /* Version.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Version.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -105,6 +106,7 @@
 		60BB2BF2300F9E1F0079F60B /* Configs */ = {
 			isa = PBXGroup;
 			children = (
+				60672A3630190D32003124AF /* Info.plist */,
 				60672A3430190D32003124AF /* Base.xcconfig */,
 				60BB2BF1300F9E1F0079F60B /* Version.xcconfig */,
 			);
