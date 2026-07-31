@@ -1,11 +1,11 @@
 //
 //  LocalizedStringTests.swift
-//  Room
+//  Meet
 //
 
 import Foundation
 import Testing
-@testable import Room
+@testable import Meet
 
 @Suite
 struct LocalizedStringTests {
@@ -19,7 +19,7 @@ struct LocalizedStringTests {
         // reads back the value rather than something a fallback invented. The
         // catalog of each module is reached through its own bundle, so this is
         // pinned once per module and proves nothing about the others.
-        #expect(String(localized: .roomLeaveTitle) == "Leave Room")
+        #expect(String(localized: .meetLeaveLabel) == "Leave meet")
     }
 
     @Test
@@ -27,6 +27,6 @@ struct LocalizedStringTests {
         // Assert.
         // The generated symbol takes the argument and the catalog holds the
         // text around it, and neither half is checked by the compiler.
-        #expect(String(localized: .roomPeerLabel("Alex")) == "Peer Alex")
+        #expect(String(localized: .meetPeerLabel("Alex")) == "Meeting with Alex")
     }
 }
