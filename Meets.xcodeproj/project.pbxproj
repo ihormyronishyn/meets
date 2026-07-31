@@ -30,6 +30,7 @@
 				Core/Utilities,
 				Features/Login,
 				Features/Room,
+				Shared/Components,
 				Shared/Services,
 			);
 			target = 60BB2BD8300F9E1D0079F60B /* Meets */;

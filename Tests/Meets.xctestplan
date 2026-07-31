@@ -27,6 +27,13 @@
     },
     {
       "target" : {
+        "containerPath" : "container:Modules\/Shared\/Components",
+        "identifier" : "ComponentsTests",
+        "name" : "ComponentsTests"
+      }
+    },
+    {
+      "target" : {
         "containerPath" : "container:Modules\/Features\/Login",
         "identifier" : "LoginTests",
         "name" : "LoginTests"
