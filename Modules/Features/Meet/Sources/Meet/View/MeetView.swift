@@ -66,3 +66,11 @@ public struct MeetView: View {
             .padding()
     }
 }
+
+// MARK: - Preview
+
+#Preview {
+    NavigationStack {
+        MeetView(viewModel: .preview)
+    } //: NavigationStack
+}
