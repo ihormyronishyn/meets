@@ -103,3 +103,14 @@ public extension WebRTCVideoView {
         }
     }
 }
+
+// MARK: - Preview
+
+// A track cannot be built without a connection, so a canvas shows the state a
+// caller sees before one arrives, an empty picture waiting to be filled.
+#Preview {
+    WebRTCVideoView(track: nil)
+        .aspectRatio(3 / 4, contentMode: .fit)
+        .clipShape(.rect(cornerRadius: 16))
+        .padding()
+}
