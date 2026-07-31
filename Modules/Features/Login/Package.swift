@@ -5,6 +5,9 @@ import PackageDescription
 
 let package = Package(
     name: "Login",
+    // The strings of this screen are carried by the module that draws it, so
+    // the catalog beside them is what the package ships and looks up.
+    defaultLocalization: "en",
     platforms: [
         .iOS(.v26),
     ],
@@ -25,6 +28,9 @@ let package = Package(
             name: "Login",
             dependencies: [
                 "Services",
+            ],
+            resources: [
+                .process("Resources"),
             ],
         ),
         .testTarget(

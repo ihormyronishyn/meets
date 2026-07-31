@@ -1,0 +1,222 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "room.caller.hint" : {
+      "comment" : "What the switch decides, read by an assistive reader.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Decides which side starts a meeting. Fixed while the room is connected."
+          }
+        }
+      }
+    },
+    "room.caller.title" : {
+      "comment" : "The switch that decides which side starts a meeting.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Caller"
+          }
+        }
+      }
+    },
+    "room.connection.connect" : {
+      "comment" : "The button that reaches the room.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connect"
+          }
+        }
+      }
+    },
+    "room.connection.connecting" : {
+      "comment" : "The button while the room is still being reached.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connecting"
+          }
+        }
+      }
+    },
+    "room.connection.disconnect" : {
+      "comment" : "The button that drops the connection but stays signed in.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disconnect"
+          }
+        }
+      }
+    },
+    "room.connection.retry" : {
+      "comment" : "The button after an attempt that did not reach the room.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try Again"
+          }
+        }
+      }
+    },
+    "room.failure.full" : {
+      "comment" : "Shown when the room turned this person away.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This room already holds two people. Leave and try another one."
+          }
+        }
+      }
+    },
+    "room.failure.unreachable" : {
+      "comment" : "Shown when the attempt to reach the room failed.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not reach the room. Check the connection and try again."
+          }
+        }
+      }
+    },
+    "room.leave.confirmation.message" : {
+      "comment" : "The body of the alert that confirms leaving.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to leave the room?"
+          }
+        }
+      }
+    },
+    "room.leave.confirmation.title" : {
+      "comment" : "The title of the alert that confirms leaving.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure?"
+          }
+        }
+      }
+    },
+    "room.leave.title" : {
+      "comment" : "The button that signs out of the room.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leave Room"
+          }
+        }
+      }
+    },
+    "room.peer.headline" : {
+      "comment" : "The label above the name of somebody in the room.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Peer"
+          }
+        }
+      }
+    },
+    "room.peer.label" : {
+      "comment" : "Somebody in the room, read by an assistive reader as one element.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Peer %@"
+          }
+        }
+      }
+    },
+    "room.peer.start.hint" : {
+      "comment" : "What pressing the button leads to, read by an assistive reader.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starts a video meeting with this peer."
+          }
+        }
+      }
+    },
+    "room.peer.start.title" : {
+      "comment" : "The button that opens a meeting with somebody.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start Meet"
+          }
+        }
+      }
+    },
+    "room.peers.empty" : {
+      "comment" : "Shown while the room is reached but empty.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No peers in the room yet."
+          }
+        }
+      }
+    },
+    "room.subtitle" : {
+      "comment" : "The subtitle naming what the number in the title is.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Room ID"
+          }
+        }
+      }
+    },
+    "room.username.title" : {
+      "comment" : "The name the person signed in carries.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Username"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

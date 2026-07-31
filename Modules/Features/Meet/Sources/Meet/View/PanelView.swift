@@ -37,7 +37,7 @@ struct PanelView: View {
 
     private var username: some View {
         HStack {
-            Text("Peer")
+            Text(.meetPeerHeadline)
                 .foregroundStyle(.secondary)
 
             Spacer(minLength: .zero)
@@ -52,7 +52,7 @@ struct PanelView: View {
         // The label and the name are one thought, so they are read as one
         // rather than as two neighbours a reader has to join up.
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Meeting with \(peer.username)")
+        .accessibilityLabel(Text(.meetPeerLabel(peer.username)))
     }
 
     // MARK: - Leave
@@ -73,8 +73,8 @@ struct PanelView: View {
         } //: Button
         // The button carries no text, so a reader would otherwise hear the
         // name of the symbol, and nothing about what pressing it does.
-        .accessibilityLabel("Leave meet")
-        .accessibilityHint("Asks to confirm, then ends the meeting.")
+        .accessibilityLabel(Text(.meetLeaveLabel))
+        .accessibilityHint(Text(.meetLeaveHint))
     }
 }
 

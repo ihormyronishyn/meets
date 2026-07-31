@@ -1,0 +1,138 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "meet.leave.confirmation.action" : {
+      "comment" : "The button in the alert that ends the meeting.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leave Meet"
+          }
+        }
+      }
+    },
+    "meet.leave.confirmation.message" : {
+      "comment" : "The body of the alert that confirms ending the meeting.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to leave the meet?"
+          }
+        }
+      }
+    },
+    "meet.leave.confirmation.title" : {
+      "comment" : "The title of the alert that confirms ending the meeting.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure?"
+          }
+        }
+      }
+    },
+    "meet.leave.hint" : {
+      "comment" : "What pressing the button leads to, read by an assistive reader.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Asks to confirm, then ends the meeting."
+          }
+        }
+      }
+    },
+    "meet.leave.label" : {
+      "comment" : "The button that ends the meeting, read by an assistive reader.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leave meet"
+          }
+        }
+      }
+    },
+    "meet.local.video.label" : {
+      "comment" : "The picture of this side, read by an assistive reader.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your own video"
+          }
+        }
+      }
+    },
+    "meet.peer.headline" : {
+      "comment" : "The label beside the name of the other side.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Peer"
+          }
+        }
+      }
+    },
+    "meet.peer.label" : {
+      "comment" : "Who the meeting is with, read by an assistive reader.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meeting with %@"
+          }
+        }
+      }
+    },
+    "meet.remote.video.label" : {
+      "comment" : "The picture of the other side, read by an assistive reader.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Video of %@"
+          }
+        }
+      }
+    },
+    "meet.video.live" : {
+      "comment" : "The state of a picture that carries a video.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Live"
+          }
+        }
+      }
+    },
+    "meet.video.waiting" : {
+      "comment" : "The state of a picture that carries no video yet.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waiting"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

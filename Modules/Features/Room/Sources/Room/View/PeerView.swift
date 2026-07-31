@@ -29,7 +29,7 @@ struct PeerView: View {
                 username
             } //: VStack
             .accessibilityElement(children: .ignore)
-            .accessibilityLabel("Peer \(peer.username)")
+            .accessibilityLabel(Text(.roomPeerLabel(peer.username)))
 
             start
         } //: VStack
@@ -38,7 +38,7 @@ struct PeerView: View {
     // MARK: - Headline
 
     private var headline: some View {
-        Text("Peer")
+        Text(.roomPeerHeadline)
             .font(.subheadline)
             .foregroundStyle(.secondary)
     }
@@ -62,7 +62,7 @@ struct PeerView: View {
                     // The text beside it already says what the button does.
                     .accessibilityHidden(true)
 
-                Text("Start Meet")
+                Text(.roomPeerStartTitle)
             } //: HStack
             .frame(maxWidth: .infinity)
         } //: Button
@@ -70,7 +70,7 @@ struct PeerView: View {
         .controlSize(.extraLarge)
         .buttonStyle(.glass)
         .disabled(!isAvailable)
-        .accessibilityHint("Starts a video meeting with this peer.")
+        .accessibilityHint(Text(.roomPeerStartHint))
     }
 }
 

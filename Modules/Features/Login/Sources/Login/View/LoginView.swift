@@ -50,8 +50,16 @@ public struct LoginView: View {
     private var section: some View {
         Section {
             Group {
-                field(text: $viewModel.usernameText, title: "Username", contentType: .username)
-                field(text: $viewModel.roomIdText, title: "Room ID", keyboardType: .numberPad)
+                field(
+                    text: $viewModel.usernameText,
+                    title: String(localized: .loginUsernameTitle),
+                    contentType: .username,
+                )
+                field(
+                    text: $viewModel.roomIdText,
+                    title: String(localized: .loginRoomTitle),
+                    keyboardType: .numberPad,
+                )
             } //: Group
             .focused($isFieldFocused)
         } header: {
@@ -63,13 +71,13 @@ public struct LoginView: View {
 
     private var header: some View {
         VStack {
-            Text("Join a Room")
+            Text(.loginHeading)
                 .font(.title)
                 .fontWeight(.bold)
                 // The rotor of a reader lists headings, and this is the one
                 // heading of the screen, so it is marked as such.
                 .accessibilityAddTraits(.isHeader)
-            Text("Enter your username and room identifier.")
+            Text(.loginSubheading)
                 .font(.subheadline)
                 .fontWeight(.medium)
                 .foregroundStyle(.secondary)
@@ -106,14 +114,14 @@ public struct LoginView: View {
         Button {
             viewModel.login()
         } label: {
-            Text("Join Room")
+            Text(.loginJoinTitle)
                 .frame(maxWidth: .infinity)
         } //: Button
         .disabled(!viewModel.isLoginAllowed)
         // A hint says what an action leads to, and it can be switched off, so
         // it carries nothing a person needs in order to act. That the button
         // waits for both fields is announced by the dimming itself.
-        .accessibilityHint("Joins the room.")
+        .accessibilityHint(Text(.loginJoinHint))
         .tint(.orange)
         .fontWeight(.medium)
         .buttonStyle(.glassProminent)
