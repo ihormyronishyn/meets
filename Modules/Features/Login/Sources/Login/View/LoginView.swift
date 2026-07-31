@@ -50,7 +50,7 @@ public struct LoginView: View {
     private var section: some View {
         Section {
             Group {
-                field(text: $viewModel.usernameText, title: "Username")
+                field(text: $viewModel.usernameText, title: "Username", contentType: .username)
                 field(text: $viewModel.roomIdText, title: "Room ID", keyboardType: .numberPad)
             } //: Group
             .focused($isFieldFocused)
@@ -66,6 +66,9 @@ public struct LoginView: View {
             Text("Join a Room")
                 .font(.title)
                 .fontWeight(.bold)
+                // The rotor of a reader lists headings, and this is the one
+                // heading of the screen, so it is marked as such.
+                .accessibilityAddTraits(.isHeader)
             Text("Enter your username and room identifier.")
                 .font(.subheadline)
                 .fontWeight(.medium)
@@ -80,8 +83,21 @@ public struct LoginView: View {
 
     // MARK: - Field
 
-    private func field(text: Binding<String>, title: String, keyboardType: UIKeyboardType = .default) -> some View {
-        TextField(title, text: text).keyboardType(keyboardType)
+    /// The title of a field is what a reader hears as its name, so no label is
+    /// added on top of it. What the field does need is to say what it holds,
+    /// which is what the content type carries, and a keyboard that leaves the
+    /// text alone, since a name is typed the way it is meant to be read.
+    private func field(
+        text: Binding<String>,
+        title: String,
+        contentType: UITextContentType? = nil,
+        keyboardType: UIKeyboardType = .default,
+    ) -> some View {
+        TextField(title, text: text)
+            .keyboardType(keyboardType)
+            .textContentType(contentType)
+            .textInputAutocapitalization(.never)
+            .autocorrectionDisabled()
     }
 
     // MARK: - Button
@@ -94,6 +110,10 @@ public struct LoginView: View {
                 .frame(maxWidth: .infinity)
         } //: Button
         .disabled(!viewModel.isLoginAllowed)
+        // A hint says what an action leads to, and it can be switched off, so
+        // it carries nothing a person needs in order to act. That the button
+        // waits for both fields is announced by the dimming itself.
+        .accessibilityHint("Joins the room.")
         .tint(.orange)
         .fontWeight(.medium)
         .buttonStyle(.glassProminent)
