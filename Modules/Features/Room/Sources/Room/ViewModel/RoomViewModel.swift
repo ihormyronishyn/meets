@@ -16,6 +16,14 @@ public final class RoomViewModel {
 
     var peers: [Peer] = []
     var isCaller: Bool = true
+
+    /// The names of the peers who have offered a meeting to the person signed
+    /// in. It is kept here rather than on a peer, because it is what this
+    /// screen has heard so far and not something the room reports about a
+    /// person, and a peer arriving again would otherwise carry it or lose it
+    /// depending on the order the events happened to arrive in.
+    private(set) var incomingCalls: Set<String> = []
+
     var isLeaveRoomConfirmationAlertPresented: Bool = false
     var signalingConnectionState: ConnectionState = .disconnected
 
@@ -70,7 +78,7 @@ public final class RoomViewModel {
     /// A peer is available if it has a defined role caller or callee,
     /// either we are the caller or it is calling us, and its role differs from the local peer.
     func isPeerAvailable(_ peer: Peer) -> Bool {
-        guard let isCaller = peer.isCaller, self.isCaller || peer.isCalling == true else { return false }
+        guard let isCaller = peer.isCaller, self.isCaller || incomingCalls.contains(peer.username) else { return false }
         return isCaller != self.isCaller
     }
 
@@ -82,21 +90,27 @@ public final class RoomViewModel {
         peers.append(peer)
     }
 
-    /// Adds a peer to the room or replaces an already present one, based on
-    /// username, so updated flags like isCalling are not discarded.
-    private func upsertPeer(_ peer: Peer) {
-        if let index = peers.firstIndex(where: { $0.username == peer.username }) {
-            peers[index] = peer
-        } else {
-            peers.append(peer)
-        }
+    // MARK: - Remove
+
+    /// Forgets a peer along with the call it was making, so a name that comes
+    /// back later arrives without the state it left behind.
+    private func removePeer(named username: String) {
+        peers.removeAll(where: { $0.username == username })
+        incomingCalls.remove(username)
+    }
+
+    /// Forgets the whole room, so nothing of one connection is read as the
+    /// state of the next.
+    private func removeAllPeers() {
+        peers.removeAll()
+        incomingCalls.removeAll()
     }
 
     // MARK: - Leave Room
 
     func leaveRoom() async {
         taskBag.cancelAll()
-        peers.removeAll()
+        removeAllPeers()
         await signalingService.disconnect()
         userAuthenticationService.logout()
         router?.didLeaveRoom()
@@ -124,7 +138,7 @@ public final class RoomViewModel {
     // MARK: - Disconnect
 
     func disconnect() async {
-        peers.removeAll()
+        removeAllPeers()
         await signalingService.disconnect()
     }
 
@@ -157,7 +171,7 @@ public final class RoomViewModel {
                 signalingConnectionState = state
 
                 if state == .disconnected {
-                    peers.removeAll()
+                    removeAllPeers()
                 }
             }
         }
@@ -181,20 +195,19 @@ public final class RoomViewModel {
         case let .roomUserJoined(peer):
             joinRoom(peer)
         case let .roomUserLeft(peer):
-            peers.removeAll(where: { $0.username == peer.username })
+            removePeer(named: peer.username)
         case let .offer(communication):
             guard let localPeer, case let .call(call) = communication else {
                 debugPrint("Ignored an offer, it carries no call or nobody is signed in.")
                 return
             }
 
-            // Adds or updates peer only if it calling to local peer. Upsert is
-            // required because the caller usually already joined the room, and
-            // skipping it would discard the isCalling flag the callee needs.
+            // Only an offer addressed to the person signed in counts. The
+            // caller is joined as well, because an offer can reach the callee
+            // before the room reports that whoever sent it is there.
             if call.to.username == localPeer.username {
-                var callFrom = call.from
-                callFrom.isCalling = true
-                upsertPeer(callFrom)
+                incomingCalls.insert(call.from.username)
+                joinRoom(call.from)
             }
         case let .answer(communication):
             guard let localPeer, case let .call(call) = communication else {
@@ -206,7 +219,8 @@ public final class RoomViewModel {
             // have established a connection. Remove both from available peers list
             // since they are now busy with a call and unavailable.
             if call.to.username != localPeer.username {
-                peers.removeAll(where: { $0.username == call.to.username || $0.username == call.from.username })
+                removePeer(named: call.to.username)
+                removePeer(named: call.from.username)
             }
         case .candidate:
             break
