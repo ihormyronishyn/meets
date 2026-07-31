@@ -1,4 +1,4 @@
-# Signaling server
+# Signaling
 
 A small server the application talks to while a meeting is being set up. It
 carries invitations, session descriptions, and candidates between the two sides
@@ -40,10 +40,23 @@ types it decodes.
 | `offer` | relayed to the room | an invitation or a session description |
 | `answer` | relayed to the room | an invitation or a session description |
 | `candidate` | relayed to the room | a candidate |
+| `room_full` | to a newcomer that is being turned away | the room and how many it holds |
 
 Everything except an invitation reaches the whole room rather than one person,
 because only an invitation names its addressee. The client drops what is not
-meant for it, which is enough while a room holds two people.
+meant for it, which is what the capacity below keeps sufficient.
+
+## Capacity
+
+A room holds two people, and the third to ask for one is told `room_full` and
+disconnected. This is not a policy, it is what the protocol above requires. A
+session description and a candidate name nobody, so a third person would apply
+what two others said to each other, and their leaving would end a meeting they
+were never part of.
+
+The count is read from the adapter rather than by fetching the sockets of the
+room, because fetching suspends, and two people arriving together would both
+count a room neither of them had joined yet.
 
 ## Versions
 

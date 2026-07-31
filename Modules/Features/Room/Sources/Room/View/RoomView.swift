@@ -123,8 +123,18 @@ public struct RoomView: View {
 
     @ViewBuilder
     private var failure: some View {
-        if viewModel.hasFailedToConnect {
-            Text("Could not reach the room. Check the connection and try again.")
+        // A room that is full and a room that could not be reached both leave the
+        // screen looking untouched, so each says what happened in its own words.
+        let message: String? = if viewModel.isRoomFull {
+            "This room already holds two people. Leave and try another one."
+        } else if viewModel.hasFailedToConnect {
+            "Could not reach the room. Check the connection and try again."
+        } else {
+            nil
+        }
+
+        if let message {
+            Text(message)
                 .font(.footnote)
                 .foregroundStyle(.red)
         }
@@ -142,7 +152,7 @@ public struct RoomView: View {
                 "Connecting"
             } else if viewModel.isConnected {
                 "Disconnect"
-            } else if viewModel.hasFailedToConnect {
+            } else if viewModel.hasFailedToConnect || viewModel.isRoomFull {
                 "Try Again"
             } else {
                 "Connect"

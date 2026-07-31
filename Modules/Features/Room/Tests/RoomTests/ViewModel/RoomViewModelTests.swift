@@ -275,6 +275,20 @@ final class RoomViewModelTests {
     }
 
     @Test
+    func aFullRoomIsNotReportedAsAFailure() {
+        // Act.
+        viewModel.signalingConnectionState = .roomIsFull
+
+        // Assert.
+        // The screen says something different about each, so collapsing a
+        // refusal into a failure would blame the connection for a full room.
+        #expect(viewModel.isRoomFull)
+        #expect(viewModel.hasFailedToConnect == false)
+        #expect(viewModel.isConnected == false)
+        #expect(viewModel.isConnecting == false)
+    }
+
+    @Test
     func connectingWithoutCredentialsAsksNothingOfTheService() async {
         // Act.
         await viewModel.connect()
