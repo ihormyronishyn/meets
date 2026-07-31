@@ -80,7 +80,7 @@ final class MeetViewModelTests {
     @Test(.timeLimit(.minutes(1)))
     func theCallerAnnouncesTheMeetingWithAnOffer() async {
         await viewModel.start()
-        #expect(await signalingService.emittedNames == Self.names(.offer))
+        #expect(await signalingService.emittedNames == [.offer])
     }
 
     @Test(.timeLimit(.minutes(1)))
@@ -93,7 +93,7 @@ final class MeetViewModelTests {
 
         await viewModel.start()
 
-        #expect(await signalingService.emittedNames == Self.names(.answer))
+        #expect(await signalingService.emittedNames == [.answer])
     }
 
     // MARK: - Observe
@@ -103,9 +103,9 @@ final class MeetViewModelTests {
         await viewModel.start()
 
         await webRTCService.send(candidate: Self.candidate())
-        await waitUntil { await self.signalingService.emittedNames.contains(PeerEvent.Name.candidate.rawValue) }
+        await waitUntil { await self.signalingService.emittedNames.contains(PeerEvent.Name.candidate) }
 
-        #expect(await signalingService.emittedNames.contains(PeerEvent.Name.candidate.rawValue))
+        #expect(await signalingService.emittedNames.contains(PeerEvent.Name.candidate))
     }
 
     @Test(.timeLimit(.minutes(1)))
@@ -136,7 +136,7 @@ final class MeetViewModelTests {
 
         #expect(await webRTCService.remoteSdpCount == 1)
         #expect(await webRTCService.answerCallCount == 1)
-        #expect(await signalingService.emittedNames == Self.names(.answer))
+        #expect(await signalingService.emittedNames == [.answer])
     }
 
     @Test
@@ -154,7 +154,7 @@ final class MeetViewModelTests {
         try await viewModel.handle(event: .answer(.call(.init(from: .Preview.local, to: .Preview.callee))))
 
         #expect(await webRTCService.offerCallCount == 1)
-        #expect(await signalingService.emittedNames == Self.names(.offer))
+        #expect(await signalingService.emittedNames == [.offer])
     }
 
     @Test
@@ -203,10 +203,6 @@ final class MeetViewModelTests {
     }
 
     // MARK: - Helpers
-
-    private static func names(_ names: PeerEvent.Name...) -> [String] {
-        names.map(\.rawValue)
-    }
 
     private static func candidate() -> IceCandidate {
         IceCandidate(RTCIceCandidate(sdp: "candidate", sdpMLineIndex: 0, sdpMid: "0"))

@@ -21,7 +21,7 @@ public enum PeerEvent: Sendable {
 
     // MARK: - Name
 
-    public enum Name: String, CaseIterable {
+    public enum Name: String, CaseIterable, Sendable {
         case roomUserJoined = "room_user_joined"
         case roomUserLeft = "room_user_left"
         case offer

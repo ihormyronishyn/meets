@@ -11,10 +11,7 @@ actor SignalingServiceSpy: SignalingServiceProtocol {
 
     // MARK: - Properties
 
-    /// Kept as raw values, because the name of an event is not Sendable and a
-    /// collection of them cannot leave the actor.
-    private(set) var emittedNames: [String] = []
-
+    private(set) var emittedNames: [PeerEvent.Name] = []
     private(set) var disconnectCallCount: Int = .zero
 
     private var peerEventContinuation: AsyncStream<PeerEvent>.Continuation?
@@ -46,7 +43,7 @@ actor SignalingServiceSpy: SignalingServiceProtocol {
     // MARK: - Emit
 
     func emit(eventName: PeerEvent.Name, payload _: some Encodable & Sendable) {
-        emittedNames.append(eventName.rawValue)
+        emittedNames.append(eventName)
     }
 
     // MARK: - Send
