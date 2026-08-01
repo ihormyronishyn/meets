@@ -20,6 +20,13 @@
   "testTargets" : [
     {
       "target" : {
+        "containerPath" : "container:Modules\/App\/App",
+        "identifier" : "AppTests",
+        "name" : "AppTests"
+      }
+    },
+    {
+      "target" : {
         "containerPath" : "container:Modules\/Shared\/Services",
         "identifier" : "ServicesTests",
         "name" : "ServicesTests"

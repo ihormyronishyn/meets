@@ -19,10 +19,6 @@ updates:
   # They arrive as one pull request rather than one for each package. The same
   # dependency is pinned to an exact version in several manifests, and moving
   # only some of them would leave versions that cannot resolve together.
-  #
-  # A dependency declared in the Xcode project rather than in a manifest stays
-  # outside this, since nothing here reads the project file. At the moment that
-  # is the navigation library, which is bumped by hand.
   - package-ecosystem: "swift"
     directories:
       - "/Modules/*/*"

@@ -7,12 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		606729FB3018BAF4003124AF /* Stinsen in Frameworks */ = {isa = PBXBuildFile; productRef = 606729FA3018BAF4003124AF /* Stinsen */; };
-		60672A2B30190D21003124AF /* Services in Frameworks */ = {isa = PBXBuildFile; productRef = 60672A2A30190D21003124AF /* Services */; };
-		60672A2D30190D24003124AF /* Login in Frameworks */ = {isa = PBXBuildFile; productRef = 60672A2C30190D24003124AF /* Login */; };
-		60672A3130190D30003124AF /* Room in Frameworks */ = {isa = PBXBuildFile; productRef = 60672A3030190D30003124AF /* Room */; };
-		60672A3330190D31003124AF /* Entities in Frameworks */ = {isa = PBXBuildFile; productRef = 60672A3230190D31003124AF /* Entities */; };
-		60672A3930190D33003124AF /* Meet in Frameworks */ = {isa = PBXBuildFile; productRef = 60672A3830190D33003124AF /* Meet */; };
+		60AA100230200002003124AF /* App in Frameworks */ = {isa = PBXBuildFile; productRef = 60AA100130200001003124AF /* App */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,12 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				60672A2B30190D21003124AF /* Services in Frameworks */,
-				60672A2D30190D24003124AF /* Login in Frameworks */,
-				60672A3330190D31003124AF /* Entities in Frameworks */,
-				60672A3130190D30003124AF /* Room in Frameworks */,
-				60672A3930190D33003124AF /* Meet in Frameworks */,
-				606729FB3018BAF4003124AF /* Stinsen in Frameworks */,
+				60AA100230200002003124AF /* App in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,12 +130,7 @@
 			);
 			name = Meets;
 			packageProductDependencies = (
-				606729FA3018BAF4003124AF /* Stinsen */,
-				60672A2A30190D21003124AF /* Services */,
-				60672A2C30190D24003124AF /* Login */,
-				60672A3230190D31003124AF /* Entities */,
-				60672A3030190D30003124AF /* Room */,
-				60672A3830190D33003124AF /* Meet */,
+				60AA100130200001003124AF /* App */,
 			);
 			productName = Meets;
 			productReference = 60BB2BD9300F9E1D0079F60B /* Meets.app */;
@@ -175,9 +160,6 @@
 			);
 			mainGroup = 60BB2BD0300F9E1D0079F60B;
 			minimizedProjectReferenceProxies = 1;
-			packageReferences = (
-				606729F93018BAF4003124AF /* XCRemoteSwiftPackageReference "stinsen" */,
-			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 60BB2BDA300F9E1D0079F60B /* Products */;
 			projectDirPath = "";
@@ -483,42 +465,10 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		606729F93018BAF4003124AF /* XCRemoteSwiftPackageReference "stinsen" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/rundfunk47/stinsen";
-			requirement = {
-				kind = exactVersion;
-				version = 2.0.15;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
-		606729FA3018BAF4003124AF /* Stinsen */ = {
+		60AA100130200001003124AF /* App */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 606729F93018BAF4003124AF /* XCRemoteSwiftPackageReference "stinsen" */;
-			productName = Stinsen;
-		};
-		60672A2A30190D21003124AF /* Services */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Services;
-		};
-		60672A2C30190D24003124AF /* Login */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Login;
-		};
-		60672A3030190D30003124AF /* Room */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Room;
-		};
-		60672A3230190D31003124AF /* Entities */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Entities;
-		};
-		60672A3830190D33003124AF /* Meet */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Meet;
+			productName = App;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

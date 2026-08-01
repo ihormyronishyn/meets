@@ -15,6 +15,11 @@ DerivedData/
 SourcePackages/
 node_modules/
 
+# The versions a package resolved to when it was built on its own. What the
+# application ships is decided by the resolution of the workspace, which is
+# tracked beside the project, and these repeat it at best.
+Modules/*/*/Package.resolved
+
 # Release automation reports when in use.
 fastlane/report.xml
 fastlane/screenshots/**/*.png
