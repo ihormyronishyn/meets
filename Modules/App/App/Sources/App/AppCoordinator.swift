@@ -1,9 +1,8 @@
 //
 //  AppCoordinator.swift
-//  Meets
+//  App
 //
 
-import Combine
 import Entities
 import Login
 import Meet
@@ -17,9 +16,11 @@ final class AppCoordinator: NavigationCoordinatable {
 
     // MARK: - Properties
 
-    @Root private var login = makeLogin
-    @Root private var room = makeRoom
-    @Route(.push) private var meet = makeMeet
+    // The routes are reachable inside this module rather than sealed away, so a
+    // test can name the one it expects to find in the stack.
+    @Root var login = makeLogin
+    @Root var room = makeRoom
+    @Route(.push) var meet = makeMeet
 
     var stack = NavigationStack(initial: \AppCoordinator.login)
 
@@ -32,10 +33,27 @@ final class AppCoordinator: NavigationCoordinatable {
 
     // MARK: - Init
 
-    init(server: Server) {
-        iceURLs = server.iceURLs
-        signalingService = SignalingService(url: server.signalingURL)
-        userAuthenticationService = UserAuthenticationService()
+    /// Builds the services this application runs on. It is the only place a
+    /// concrete one is made, which is what leaves every screen below it holding
+    /// protocols it can be handed a double for.
+    convenience init(server: Server) {
+        self.init(
+            signalingService: SignalingService(url: server.signalingURL),
+            userAuthenticationService: UserAuthenticationService(),
+            iceURLs: server.iceURLs,
+        )
+    }
+
+    /// Takes the services already made, so a test can stand in for them without
+    /// reaching a socket or what the application stored.
+    init(
+        signalingService: SignalingServiceProtocol,
+        userAuthenticationService: UserAuthenticationServiceProtocol,
+        iceURLs: [String],
+    ) {
+        self.signalingService = signalingService
+        self.userAuthenticationService = userAuthenticationService
+        self.iceURLs = iceURLs
 
         if userAuthenticationService.isAuthenticated {
             stack = NavigationStack(initial: \AppCoordinator.room)
@@ -73,6 +91,7 @@ extension AppCoordinator: RoomRouting {
             signalingService: signalingService,
             userAuthenticationService: userAuthenticationService,
         )
+
         roomViewModel.router = self
         return RoomView(viewModel: roomViewModel)
     }

@@ -1,28 +1,35 @@
 //
 //  Server.swift
-//  Meets
+//  App
 //
 
 import Foundation
 
 /// The addresses this build talks to, gathered in one value so the composition
 /// root hands them over together rather than one parameter at a time.
-struct Server: Sendable {
+public struct Server: Sendable {
 
     // MARK: - Properties
 
     /// Where the signaling server listens.
-    let signalingURL: URL
+    public let signalingURL: URL
 
     /// The discovery servers a peer connection may use, in the order they are
     /// written. An empty list is allowed, since a connection over a local
     /// network needs none.
-    let iceURLs: [String]
+    public let iceURLs: [String]
+
+    // MARK: - Init
+
+    public init(signalingURL: URL, iceURLs: [String]) {
+        self.signalingURL = signalingURL
+        self.iceURLs = iceURLs
+    }
 }
 
 // MARK: - Current
 
-extension Server {
+public extension Server {
 
     // MARK: - Keys
 
@@ -56,6 +63,8 @@ extension Server {
 
     // MARK: - String
 
+    /// The list is read from the bundle of the application rather than the one
+    /// of this module, because the build settings fill in the former.
     private static func string(for key: Key) -> String {
         guard let value = Bundle.main.object(forInfoDictionaryKey: key.rawValue) as? String else {
             preconditionFailure("\(key.rawValue) is missing from the information property list.")
