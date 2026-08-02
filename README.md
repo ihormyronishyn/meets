@@ -1,12 +1,15 @@
 # Meets
 
+<img width="3840" height="2160" alt="banner" src="https://github.com/user-attachments/assets/62d3380b-7ad5-422a-b4c2-1cb59720e886" />
+
+###
+
 ![Swift](https://img.shields.io/badge/Swift-6.3-F05138)
-![iOS](https://img.shields.io/badge/iOS-26+-5856D6)
+![iOS](https://img.shields.io/badge/iOS-26-5856D6)
 ![Xcode](https://img.shields.io/badge/Xcode-26.6-147EFB)
 ![Framework](https://img.shields.io/badge/Framework-SwiftUI-4CAF50)
-
 ![WebRTC](https://img.shields.io/badge/WebRTC-150.0.0-A5B4FC)
-![Socket.IO](https://img.shields.io/badge/Socket.IO_Client-16.1.1-010101)
+![Socket.IO](https://img.shields.io/badge/Socket.IO-16.1.1-010101)
 ![Stinsen](https://img.shields.io/badge/Stinsen-2.0.15-FF8A65)
 ![Node](https://img.shields.io/badge/Node-22-339933)
 
@@ -27,9 +30,8 @@ opening the others.
 
 - Sign in with a name and the number of a room, choosing which side opens the
   meeting.
-- Watch the room fill and empty as people arrive and leave, without asking it
-  to refresh.
-- Start a meeting with somebody whose side is the opposite of yours, and answer
+- Watch the room fill and empty as people arrive and leave in real time.
+- Start a meeting with somebody whose role is the opposite of yours, and answer
   one that somebody started with you.
 - Camera and microphone both ways, over a connection made directly between the
   two devices rather than through a server.
@@ -46,7 +48,7 @@ opening the others.
 
 ## Implementation
 
-**MVVM with a coordinator.** A view renders state and forwards intent. A view
+**MVVM+C architecture.** A view renders state and forwards intent. A view
 model owns the state of one screen, is `@Observable` and lives on the main
 actor, and is the only thing that changes that state. A coordinator owns
 navigation and builds the two together, and is the only place a concrete
@@ -67,7 +69,7 @@ enforce on their own, since a package cannot see what it has not declared. The
 composition root is a package like the rest, so the target of the application
 holds an entry point and its resources and nothing else.
 
-**Swift 6, strictly.** The language mode is `6` in every manifest. Services are
+**Swift 6.** The language mode is `6` in every manifest. Services are
 actors, everything crossing between them is `Sendable`, and the screens are on
 the main actor by declaration rather than by hope. Where a framework type
 cannot be made safe, the promise is made in one visible place instead of being
