@@ -19,7 +19,7 @@ let package = Package(
         .package(path: "../../Core/Entities"),
         .package(path: "../../Core/Utilities"),
         .package(url: "https://github.com/socketio/socket.io-client-swift", exact: "16.1.1"),
-        .package(url: "https://github.com/stasel/WebRTC", exact: "150.0.0"),
+        .package(url: "https://github.com/stasel/WebRTC", exact: "151.0.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
